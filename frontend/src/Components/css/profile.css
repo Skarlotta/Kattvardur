@@ -1,0 +1,108 @@
+.profile-wrapper{
+    width:80%;
+    margin-left:10%;
+    margin-right:10%;
+    padding-top:3em;
+    position: absolute;
+}
+
+.profile-image{
+    border:1px solid black;
+    width:15em;
+    height:15em;
+    transition: filter .25s;
+}
+
+.profile-image:hover{
+    cursor: pointer;
+    filter:brightness(80%);
+}
+
+.profile-button{
+    width:100%;
+    background-color:var(--orange);
+    margin-top:-.5em;
+}
+
+.fullScreen-wrapper{
+    position: absolute;
+    left:0px;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.75);
+}
+
+.centered{
+    width:20vw;
+    height:20vw;
+    position: absolute;
+    left:50%;
+    top:20%;
+    transform: translateX(-50%);
+}
+
+.left-profile{
+    float:left;
+}
+
+.right-profile{
+    float:left;
+    width:60%;
+    margin-left:5%;
+}
+
+.profile-infokey{
+    border-right: 1px solid var(--orange);
+    padding-right: 2em;
+}
+
+.profile-info{
+    padding-left:2em;
+}
+
+.profile-infotable{
+    border:none;
+    border-collapse: collapse;
+}
+
+.bottom-profile{
+    width:100%;
+    float:left;
+    margin-top:3em;
+    border-top:1px solid var(--orange);
+}
+
+.profile-tab{
+    display:inline-block;
+    background-color: var(--orange);
+    height:1.75em;
+    text-align: center;
+    font-size:1.1em;
+
+    margin-right:5px;
+    color:white;
+    min-width: 3em;
+
+    padding-left:0.5em;
+    padding-right:0.5em;
+    
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+
+    transition:background-color .2s;
+}
+
+.profile-tabStick{
+    width:100%;
+    border-bottom: 1px solid var(--lightorange);
+    padding-bottom:1em;
+}
+
+.profile-tab.selected{
+    background-color: var(--lightorange);
+}
+
+.profile-tab:hover{
+    cursor:pointer;
+    background-color: var(--lightorange);
+}

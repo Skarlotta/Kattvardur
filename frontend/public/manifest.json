@@ -1,0 +1,8 @@
+{
+  "short_name": "Kattvarður",
+  "name": "Kattvarður - Gagnagrunnur Kynjakatta",
+  "icons": [
+  ],
+  "start_url": ".",
+  "display": "standalone"
+}

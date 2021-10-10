@@ -1,0 +1,26 @@
+.dropdown{
+    border:1px solid lightgray;
+    position:absolute;
+    background-color:white;
+    top:3em;
+    box-shadow: 4px 5px 20px -4px rgba(92,92,92,0.72);
+    z-index:999;
+}
+
+.dropdown-child{
+    font-size: 1.25em;
+    margin:0px;
+}
+.dropdown-child a{
+    width:100%;
+    margin:0;
+    padding:0;
+    display:block;
+    padding: 0.5em;
+    padding-top:0.25em;
+    padding-bottom:0.25em;
+}
+
+.dropdown-child:hover{
+    background-color:lightgray;
+}
