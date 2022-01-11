@@ -1,6 +1,8 @@
+import Cookies from 'js-cookie';
 //import moment from 'moment';
 var getCache = {};
 const APIVERSION = "v1";
+
 
 function apiFetch(url, configuration){
     if(!configuration || !("method" in configuration) || configuration.method === "GET"){
@@ -11,6 +13,13 @@ function apiFetch(url, configuration){
                     resolve(getCache[url].data);
                 })
             //}
+        }
+    }
+
+    if(configuration.method === "POST" || configuration.method === "DELETE" || configuration.method === "PATCH" || configuration.method === "PUT"){
+        const csrftoken = Cookies.get('csrftoken'); // or the value from settings.CSRF_COOKIE_NAME
+        if (csrftoken) {
+            e.headers['X-CSRFTOKEN'] = csrftoken;
         }
     }
     return new Promise((resolve, fail) => {

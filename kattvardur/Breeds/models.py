@@ -12,7 +12,7 @@ class Color(models.Model):
     short = models.CharField(max_length=20, unique = True)
     desc = models.CharField(max_length=1024)
     def __str__(self):
-        return self.breed
+        return self.color
 
 class EMS(models.Model):
     breed = models.ForeignKey('Breed',on_delete=models.CASCADE)

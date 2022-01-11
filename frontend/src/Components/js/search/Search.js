@@ -14,11 +14,8 @@ class GenericSearch extends React.Component {
     }
 
     getResults(x){
-        let data = JSON.stringify({"search":{"name":x}});
-        fetch(this.apiLocation + "?data="+data).then(x => x.json()).then(data => {
-            if(data.success){
-                this.setState({results:data.results});
-            }
+        fetch(this.apiLocation + "?search="+x).then(x => x.json()).then(data => {
+            this.setState({results:data});
         });
     }
 

@@ -3,6 +3,7 @@ from django.db.models.deletion import SET_NULL
 
 from Catteries.models import Cattery
 from Organizations.models import Organization
+from Breeds.models import EMS
 
 class Cat(models.Model):
     id = models.AutoField(primary_key = True)
@@ -18,22 +19,31 @@ class Cat(models.Model):
 
     @property
     def registry_number(self):
-        registry = self.registry_set.latest('registry_date')
-        return registry.registry_number
+        registry = self.registry_set
+        if(registry.count() > 0):
+            return registry.latest('registry_date').registry_number
+        else:
+            return "[N/A]"
 
     def __str__(self):
         if self.cattery:
             pre = self.registry_number + " - " + self.cattery.name + " " + self.name 
-            post = self.registry_number + " - " + self.name + " " +self.cattery.name
+            post = self.registry_number + " - " + self.name + " " +self.cattery.name + " "
             return pre if self.cattery.prefix else post
         else:
             return self.registry_number + " - " + self.name 
+
+class Catcolor(models.Model):
+    date = models.DateField(auto_now=True)
+    cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
+    ems = models.ForeignKey(EMS, on_delete=models.CASCADE)
+
 
 class Registry(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     Organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
     registry_date = models.DateField(null = True)
-    registry_number = models.CharField(max_length = 20)
+    registry_number = models.CharField(max_length = 20, unique=True)
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
 
