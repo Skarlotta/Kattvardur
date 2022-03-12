@@ -2,10 +2,11 @@ import Cookies from 'js-cookie';
 //import moment from 'moment';
 var getCache = {};
 const APIVERSION = "v1";
+import urls from './urls';
 
 
-function apiFetch(url, configuration){
-    if(!configuration || !("method" in configuration) || configuration.method === "GET"){
+function apiFetch(url, configuration = {method:"GET"}){
+    if(!("method" in configuration) || configuration.method === "GET"){
         if(url in getCache){
             //var date = moment(new Date());
             //if(moment(getCache[url].expires) > date){
@@ -23,7 +24,13 @@ function apiFetch(url, configuration){
         }
     }
     return new Promise((resolve, fail) => {
-        fetch("/api/"+APIVERSION+"/"+url, configuration).then(data => data.json()).then(data =>{
+        console.log("A");
+        fetch("/api/"+APIVERSION+"/"+url, configuration).then(data => {
+            console.log(data.status);
+            if (data.status == 403) {
+                window.location = urls.LOGIN;
+            }
+        }).then(data =>{
             //let expires = moment(new Date()).add(5,'m');
             getCache[url] = {
                 //expires,

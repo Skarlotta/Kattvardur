@@ -1,6 +1,7 @@
 import React from 'react';
 import {SearchPage} from './SearchPage';
 import "../../css/SearchPages.css"
+import apiFetch from '../../../Site_code/api';
 
 class GenericSearch extends React.Component {
     constructor(props){
@@ -14,7 +15,7 @@ class GenericSearch extends React.Component {
     }
 
     getResults(x){
-        fetch(this.apiLocation + "?search="+x).then(x => x.json()).then(data => {
+        apiFetch(this.apiLocation + "?search="+x).then(x => x.json()).then(data => {
             this.setState({results:data});
         });
     }

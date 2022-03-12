@@ -44,6 +44,14 @@ function CatteryRouter(props){
     );
 };
 
-let exp = {CatRouter, MemberRouter, CatteryRouter};
+function AuthRouter(props){
+    return <div>         
+    <Switch>       
+        <Route path={urls.LOGIN} exact component={CatterySearch}></Route>
+    </Switch>       
+</div>
+}
+
+let exp = {CatRouter, MemberRouter, CatteryRouter, AuthRouter};
 
 export default exp;

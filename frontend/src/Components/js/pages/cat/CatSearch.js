@@ -9,7 +9,7 @@ class CatSearch extends GenericSearch{
     constructor(props){
         super();
         this.title="Leita að Ketti";
-        this.apiLocation = "/api/v1/cat";
+        this.apiLocation = "cat";
     }
 
     processResults(data){

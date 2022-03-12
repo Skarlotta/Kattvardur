@@ -4,29 +4,46 @@ import { Route,  BrowserRouter } from "react-router-dom";
 import Routers from './js/Routers'
 import {Header} from './js/navbar/Header';
 import "./css/master.css";
-import {urls, navbarList} from '../Site_code/urls' ;
+import {urls, navbarList, unauthorizedList} from '../Site_code/urls' ;
+import LoginForm from './js/pages/auth/LoginForm';
 
 
-function Test(){
-  return (<b>lul</b>);
+function Test({user}){
+  return (<b>{user.name}</b>);
 }
 
 class App extends React.Component {
   constructor(props){
     super();
+    this.state = {
+      user : {
+        name:"bob"
+      },
+    }
   }
   render(){
-    return (
-      <div>
-          <BrowserRouter>
-              <Header navbar = {navbarList}></Header>
-              <Route path={urls.HOME} exact component={Test}></Route>
-              <Route path={urls.CATS} component={Routers.CatRouter}></Route>
-              <Route path={urls.MEMBERS} component={Routers.MemberRouter}></Route>
-              <Route path={urls.CATTERIES} component={Routers.CatteryRouter}></Route>
-          </BrowserRouter>
+    var nav;
+    if(!this.state.user.login){
+      return <div>
+        <Header user = {this.state.user} navbar = {[]}></Header>
+        <b>Please Log In</b>
+        <LoginForm></LoginForm>
       </div>
-    );
+    } else{
+      return (
+        <div>
+            <BrowserRouter>
+                <Header user = {this.state.user} navbar = {navbarList}></Header>
+                <Route path={urls.HOME} exact>
+                  <Test user={this.state.user}></Test>
+                </Route>
+                <Route path={urls.CATS} component={Routers.CatRouter}></Route>
+                <Route path={urls.MEMBERS} component={Routers.MemberRouter}></Route>
+                <Route path={urls.CATTERIES} component={Routers.CatteryRouter}></Route>
+            </BrowserRouter>
+        </div>
+      );
+    }
   }
 }
 
