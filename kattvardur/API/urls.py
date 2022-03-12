@@ -2,7 +2,7 @@ from django.urls import path, include, re_path
 from rest_framework import routers
 from People.views import PersonViewSet
 from Cats.views import CatViewSet
-from API.auth_views import Login, Logout
+from API.auth_views import Login, Logout, OauthLogin
 
 app_name = 'API'
 
@@ -11,6 +11,7 @@ router.register(r'person', PersonViewSet, basename="person")
 router.register(r'cat', CatViewSet, basename="cat")
 
 urlpatterns = [
+    path('auth/oauth/', OauthLogin),
     path('auth/login/', Login),
     path('auth/logout/', Logout),
     path('', include(router.urls)),

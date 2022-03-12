@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const devenv = require("./devenv.json");
 
 module.exports = {
    entry: './index.js',
@@ -40,7 +41,10 @@ module.exports = {
          }
       ]
    },
-   plugins:[
+   plugins:[    
+      new webpack.DefinePlugin({
+      'process.env': JSON.stringify(devenv),
+    }),
     new HtmlWebpackPlugin({
         template:"./index.html",
     }),
