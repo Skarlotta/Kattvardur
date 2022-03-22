@@ -43,12 +43,13 @@ class Registry(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     Organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
     registry_date = models.DateField(null = True)
-    registry_number = models.CharField(max_length = 20, unique=True)
+    registry_number = models.CharField(max_length = 20)
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.registry_number + " - " + self.cat.name
+        return self.Organization.short + " " + self.registry_number + " - " + self.cat.name
+
 class Microchip(models.Model):
 	cat = models.ForeignKey(Cat,on_delete=models.CASCADE)
 	microchip = models.CharField(max_length = 30, primary_key=True)  

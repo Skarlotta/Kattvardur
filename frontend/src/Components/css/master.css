@@ -50,3 +50,7 @@ ul{
 .checkeredTable th{
     user-select:none;
 }
+
+.centered-text{
+    text-align: center;
+}

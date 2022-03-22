@@ -21,6 +21,7 @@ const BasicInformation = ({changeCat, warnings, cat}) => <div>
             </span>
             <span>
                 <b>Fæðingadagur</b><i className="warning">{warnings.birthdate}</i><br></br>
+                <input type="date" value={cat.birth_date} onChange={e => changeCat("birth_date",e.target.value)}></input>
             </span>
             <span>
                 <b>Skráningarnúmer</b><br></br>
@@ -107,7 +108,7 @@ const Confirm = ({cat, owners, validEms}) =>{
         <div>
             Nafn kattar <i>{cat.name} </i><br></br>
             Kyn <i>{cat.gender === "male" ? "Fress":"Læða"}</i><br></br>
-            Fæðingardagur <i>{cat.birthdate.toDateString()}</i><br></br>
+            Fæðingardagur <i>{cat.birth_date.toDateString()}</i><br></br>
             Skráninganúmer <i>{cat.registry_digits}</i><br></br>
             Örmerki <i>{cat.microchip}</i><br></br>
             EMS <i>{cat.breed} {cat.color}</i> {val}<br></br>
@@ -145,7 +146,7 @@ class HousecatRegistration extends Component{
                 gender:"male",
                 microchip:"",
                 neutered:true,
-                birthdate:new Date(),
+                birth_date:new Date(),
                 registration_date: new Date(),
                 registry_digits: "????"
             },
@@ -173,9 +174,9 @@ class HousecatRegistration extends Component{
     }
 
     componentDidMount(){
-        fetch("/api/v1/util/skrnr").then(data => data.json()).then(data =>{
+        fetch("/api/v1/cat/regnr").then(data => data.json()).then(data =>{
             let cat = this.state.cat;
-            cat.registry_digits = data.result;
+            cat.registry_digits = data.reg_nr;
             this.setState({cat});
         })
     }
@@ -183,9 +184,9 @@ class HousecatRegistration extends Component{
     onSave(){
         let cat = this.state.cat;
         cat.ems = cat.breed + " " + cat.color;
-        cat.birthdate = cat.birthdate.toISOString().slice(0,10);
+        cat.birth_date = cat.birth_date.toISOString().slice(0,10);
         cat.registry_number = "ÍS KKÍ HÚS " + cat.registry_digits;
-        fetch("/api/v1/kettir", {
+        fetch("/api/v1/cat", {
             method:"POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -194,7 +195,7 @@ class HousecatRegistration extends Component{
             body: JSON.stringify(cat),
         }).then(data => data.json()).then(data => {
             if(data.success){
-                
+                alert("woo!"); 
             }
         })
     }

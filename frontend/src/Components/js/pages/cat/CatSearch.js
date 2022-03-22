@@ -9,10 +9,11 @@ class CatSearch extends GenericSearch{
     constructor(props){
         super();
         this.title="Leita að Ketti";
-        this.apiLocation = "cat";
+        this.apiLocation = "cat/";
+        this.processResults = this.processResults.bind(this);
     }
 
-    processResults(data){
+    processResults(){
         let r = []
         for(let x of this.state.results){
             var col = x.colors[0] || {ems:"N/A"};

@@ -9,6 +9,9 @@ import { GoogleLogin } from 'react-google-login';
 class LoginForm extends Component{
     constructor(props){
         super();
+        this.state = {
+            error : null
+        }
         this.onGoogleFail = this.onGoogleFail.bind(this);
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
         this.GoogleValidate = this.GoogleValidate.bind(this);
@@ -16,13 +19,14 @@ class LoginForm extends Component{
 
     //void onGoogleFail - Callback for when Google Oauth fails. Displays an error message
     onGoogleFail(){
-
+        this.setState({
+            error: "Google auðkenning mistókst"
+        });
     }
 
     //void onGoogleSuccess - Callback for when Google Oauth succeeds. Filters out the tokenId and Email and passes it on to validation
     //Dict resp => the response returned by Google 
     onGoogleSuccess(resp){
-
         var tokenId = resp.tokenId;
         var data = {
             email : resp.profileObj.email
@@ -44,11 +48,36 @@ class LoginForm extends Component{
             headers
         }).then(resp => {
             console.log(resp);
+            if(resp.status == 200){
+                console.log("200");
+                resp.json().then(dat => {
+                    this.props.onLogin(dat.user);
+                })
+            } else if(resp.status == 401 || resp.status == 403){
+                console.log("401");
+                this.setState({
+                    error : "Enginn aðgangur fannst fyrir gefið netfang"
+                });
+            } else{
+                console.log("err");
+                this.setState({
+                    error : "Óvænt villa, reynið aftur síðar"
+                })
+            }
         });
     }
 
     render(){
+        var error = null;
+        if (this.state.error) {
+            error = <div>
+                <b>
+                    {this.state.error}
+                </b>
+            </div>
+        }
         return <div>
+            {error}
             <GoogleLogin
             clientId = {process.env.KATTVARDUR_GOOGLE_CLIENT_ID}      
             buttonText="Innskráning með Google"

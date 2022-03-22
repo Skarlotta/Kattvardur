@@ -60,7 +60,12 @@ def OauthLogin(request):
             try:
                 user = User.objects.get(email__iexact=email)
                 login(request, user)
-                return JsonResponse({"msg":"authenticated"}, status=200)
+                userDict = {
+                    "first_name" : user.first_name,
+                    "last_name" : user.last_name,
+                    "email" : user.email,
+                }
+                return JsonResponse({"user": userDict}, status=200)
             except User.DoesNotExist:
                 return JsonResponse({"error":"Authentication Failed"},  status=401)        
     except ValidationError:

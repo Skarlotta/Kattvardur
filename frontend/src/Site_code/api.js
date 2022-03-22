@@ -24,20 +24,17 @@ function apiFetch(url, configuration = {method:"GET"}){
         }
     }
     return new Promise((resolve, fail) => {
-        console.log("A");
         fetch("/api/"+APIVERSION+"/"+url, configuration).then(data => {
             console.log(data.status);
             if (data.status == 403) {
                 window.location = urls.LOGIN;
+            } else{
+                getCache[url] = {
+                    data
+                };
+                console.log(data);
+                resolve(data);
             }
-        }).then(data =>{
-            //let expires = moment(new Date()).add(5,'m');
-            getCache[url] = {
-                //expires,
-                data
-            };
-
-            resolve(data);
         }).catch(fail);
     });
 }

@@ -15,8 +15,13 @@ class GenericSearch extends React.Component {
     }
 
     getResults(x){
-        apiFetch(this.apiLocation + "?search="+x).then(x => x.json()).then(data => {
-            this.setState({results:data});
+        apiFetch(this.apiLocation + "?search="+x).then(d =>{
+            console.log(d);
+            d.json().then(data => {
+                this.setState({
+                    results: data
+                })
+            })
         });
     }
 
@@ -29,7 +34,8 @@ class GenericSearch extends React.Component {
     }
 
     ///Overwrite in inheriting classes
-    processResults(data){
+    processResults(){
+        console.log(this.state);
         let r = []
         for(let x of this.state.results){
             r.push({"key":x.id, "element":(<b key={x.id}>{JSON.stringify(x)}</b>)});

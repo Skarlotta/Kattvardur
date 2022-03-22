@@ -6,28 +6,42 @@ import {Header} from './js/navbar/Header';
 import "./css/master.css";
 import {urls, navbarList, unauthorizedList} from '../Site_code/urls' ;
 import LoginForm from './js/pages/auth/LoginForm';
+import Cookies from 'js-cookie';
+import Home from './js/pages/Home';
 
-
-function Test({user}){
-  return (<b>{user.name}</b>);
-}
 
 class App extends React.Component {
   constructor(props){
     super();
-    this.state = {
-      user : {
-        name:"bob"
-      },
+    let user = Cookies.get('user');
+    if(user){
+      user = JSON.parse(user);
+    } else{
+      user = {};
     }
+    this.state = {
+      user: user
+    };
+    this.setUser = this.setUser.bind(this);
   }
+
+  setUser(user, tokenId){
+    user.login = true;
+    user.tokenId = tokenId;
+    Cookies.set('user', JSON.stringify(user));
+
+    this.setState({
+      user : user
+    });
+  }
+
   render(){
     var nav;
     if(!this.state.user.login){
-      return <div>
+      return <div>                 
         <Header user = {this.state.user} navbar = {[]}></Header>
         <b>Please Log In</b>
-        <LoginForm></LoginForm>
+        <LoginForm onLogin={this.setUser}></LoginForm>
       </div>
     } else{
       return (
@@ -35,7 +49,7 @@ class App extends React.Component {
             <BrowserRouter>
                 <Header user = {this.state.user} navbar = {navbarList}></Header>
                 <Route path={urls.HOME} exact>
-                  <Test user={this.state.user}></Test>
+                  <Home user={this.state.user}></Home>
                 </Route>
                 <Route path={urls.CATS} component={Routers.CatRouter}></Route>
                 <Route path={urls.MEMBERS} component={Routers.MemberRouter}></Route>
