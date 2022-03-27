@@ -16,6 +16,7 @@ class Person extends Model{
             this.formfield("email", "Netfang", "email"),
             this.formfield("phone","Símanúmer", "string"),
         ]
+        this.url="/person";
     }
 
     emptyObject(){

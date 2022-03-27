@@ -1,5 +1,6 @@
 import React from 'react';
 import CountrySelector from '../misc/CountrySelector';
+import apiFetch from '../../../Site_code/api';
 
 
 class Model{
@@ -11,6 +12,8 @@ class Model{
         }
 
         this.formFields = [];
+        this.changed = false;
+        this.url = null;
     }
 
     formfield(name, label, type){
@@ -22,7 +25,9 @@ class Model{
     }
 
     emptyObject(){
-        return {};
+        return {
+            id:null
+        };
     }
 
     row(){
@@ -33,6 +38,46 @@ class Model{
 
     setField(field, value){
         this.obj[field] = value;
+        this.changed = true;
+    }
+
+    setObject(Newobject){
+        this.changed = true;
+        this.obj = Newobject;
+    }
+
+    save(){
+        if(!this.changed){
+            return;
+        }
+        if(this.obj.id === null){
+            apiFetch(this.url+"/", {
+                method : "POST",
+                body : JSON.stringify(this.obj)
+            }).then(d => d.json().then(data => {
+                this.id = data.id;
+                this.changed = false;
+            }))
+        } else{
+            apiFetch(this.url+"/"+string(this.id), {
+                method : "PATCH",
+                body : JSON.stringify(this.obj)
+            }).then(d => d.json().then(data => {
+                this.changed = false;
+            }))
+        }
+    }
+
+    delete(){
+        if(this.id === null){
+            return;
+        }
+        apiFetch(this.url+"/"+string(this.id), {
+            method : "DELETE",
+            body : JSON.stringify(this.obj)
+        }).then(d => d.json().then(data => {
+            this.changed = false;
+        }))
     }
 
     form(onChange, warnings = {}, exclude = [], readonly = [], ){

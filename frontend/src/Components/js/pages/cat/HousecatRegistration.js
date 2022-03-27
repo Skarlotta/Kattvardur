@@ -16,17 +16,37 @@ const Confirm = ({cat, owners, validEms}) =>{
         <h3>Staðfesta</h3>
         <p>Vinsamlegast staðfestið að eftirfarandi upplýsingar séu réttar</p>
         
-        <div>
-            Nafn kattar <i>{cat.name} </i><br></br>
-            Kyn <i>{cat.gender === "male" ? "Fress":"Læða"}</i><br></br>
-            Fæðingardagur <i>{cat.birth_date.toDateString()}</i><br></br>
-            Skráninganúmer <i>{cat.registry_digits}</i><br></br>
-            Örmerki <i>{cat.microchip}</i><br></br>
-            EMS <i>{cat.breed} {cat.color}</i> {val}<br></br>
-        </div>
-<br></br>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Nafn kattar</td>
+                    <td>{cat.name}</td>
+                </tr>
+                <tr>
+                    <td>Kyn</td>
+                    <td>{cat.gender === "male" ? "Fress":"Læða"}</td>
+                </tr>
+                <tr>
+                    <td>Fæðingardagur</td>
+                    <td>{cat.birth_date.toDateString()}</td>
+                </tr>
+                <tr>
+                    <td>Skráninganúmer</td>
+                    <td>{cat.registry_digits}</td>
+                </tr>
+                <tr>
+                    <td>Örmerki</td>
+                    <td>{cat.microchip}</td>
+                </tr>
+                <tr>
+                    <td>EMS</td>
+                    <td>{cat.breed} {cat.color} <i>{val}</i></td>
+                </tr>
+            </tbody>
+        </table> 
         <b>Eigendur:</b>
         <table>
+            <thead>
             <tr>
                 <th>Nafn</th>
                 <th>Kennitala</th>
@@ -34,13 +54,16 @@ const Confirm = ({cat, owners, validEms}) =>{
                 <th>Netfang</th>
                 <th>Símanúmer</th>
             </tr>
-            {owners.map(x => <tr>
-                <td>{x.name}</td>
-                <td>{x.ssn}</td>
-                <td>{x.address} {x.postcode} {x.city} {x.country}</td>
-                <td>{x.email}</td>
-                <td>{x.phone}</td>
-            </tr>)}
+            </thead>
+            <tbody>
+                {owners.map(x => <tr>
+                    <td>{x.obj.name}</td>
+                    <td>{x.obj.ssn}</td>
+                    <td>{x.obj.address} {x.obj.postcode} {x.obj.city} {x.obj.country}</td>
+                    <td>{x.obj.email}</td>
+                    <td>{x.obj.phone}</td>
+                </tr>)}
+            </tbody>
         </table>
     </div>
 }
@@ -115,10 +138,12 @@ class HousecatRegistration extends Component{
             console.log("Invalid");
             return;
         }
-        fetch("/api/v1/person/?ssn="+encodeURI(this.state.kt)).then(data => data.json()).then(
+        let ssn = this.state.kt;
+        fetch("/api/v1/person/?ssn="+encodeURI(ssn)).then(data => data.json()).then(
             data => {
                 let owners = this.state.owners;
                 let newOwner = new Person();
+                newOwner.setField("ssn", ssn);
                 if(data.length === 1){
                     if(owners.find(x=>x.id === data.results[0].id)){
                         return;
@@ -210,7 +235,7 @@ class HousecatRegistration extends Component{
 
     render(){
         let owners = this.state.owners.map((person,i) => {
-            return <div className="outlined">{person.form((key, val) => this.changeOwner(i, key, val), this.state.warnings, [], ["ssn"])}</div>;
+            return <div key={i} className="outlined">{person.form((key, val) => this.changeOwner(i, key, val), this.state.warnings, [], ["ssn"])}</div>;
         })
         return <div>
             <Progressbar currentStep={this.state.page} totalSteps={2}></Progressbar>

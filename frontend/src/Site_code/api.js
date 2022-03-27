@@ -25,14 +25,12 @@ function apiFetch(url, configuration = {method:"GET"}){
     }
     return new Promise((resolve, fail) => {
         fetch("/api/"+APIVERSION+"/"+url, configuration).then(data => {
-            console.log(data.status);
             if (data.status == 403) {
                 window.location = urls.LOGIN;
             } else{
                 getCache[url] = {
                     data
                 };
-                console.log(data);
                 resolve(data);
             }
         }).catch(fail);

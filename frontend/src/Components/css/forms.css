@@ -149,3 +149,26 @@
     padding-left: 1em;
 }
 
+table {
+    border : 1px solid gray;
+    text-align: center;
+}
+
+table thead{
+    background-color: var(--orange);
+}
+
+table tbody tr:nth-child(n){
+    background-color: rgb(200,200,200);
+}
+
+table tbody tr:nth-child(2n){
+    background-color: rgb(230,230,230);
+}
+
+table td{
+    padding-left:1em;
+    padding-right:1em;
+    padding-top:0.25em;
+    padding-bottom:0.25em;
+}
