@@ -166,9 +166,14 @@ table tbody tr:nth-child(2n){
     background-color: rgb(230,230,230);
 }
 
-table td{
+table td, table th{
     padding-left:1em;
     padding-right:1em;
     padding-top:0.25em;
     padding-bottom:0.25em;
+}
+
+table {
+    margin-bottom:1em;
+    margin-top:1em;
 }

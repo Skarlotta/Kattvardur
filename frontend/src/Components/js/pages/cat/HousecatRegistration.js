@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {MultistepForm, Progressbar} from '../../misc/MultistepForm';
 import "../../../css/forms.css";
 import {CatForm} from '../../misc/forms/Forms';
-import Person from '../../Models/Person/Person';
+import Person from '../../Models/Person';
 import { isValidIsSSN } from '../../../../Site_code/util';
 //<DatePicker dateFormat="dd/MM/yyyy" selected={cat.birthdate} onChange={date => changeCat("birthdate", date)}></DatePicker>
 

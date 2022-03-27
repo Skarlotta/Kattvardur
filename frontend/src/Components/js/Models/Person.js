@@ -1,9 +1,8 @@
 import React from 'react';
-import CountrySelector from '../../misc/CountrySelector';
-import Model from '../Model';
+import Model from './Model';
 
 
-class Person extends Model{
+class Person extends Model {
     constructor(obj){
         super();
         this.formFields = [

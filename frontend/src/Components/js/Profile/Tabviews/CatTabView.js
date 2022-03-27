@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component , useEffect} from 'react';
 import {Tabview, Tab} from '../../Profile/ProfileComponents/Tabview';
-import {PersonRow} from '../../Models/Person/Person';
+import Person from '../../Models/Person';
 import {CatSiblings, CatLitters, CatJudgements, CatAwards, CatCerts, CatFamilyTree} from '../../Models/Cat/Cat';
 
 function Other({id}){
