@@ -47,12 +47,21 @@
     overflow: hidden;
 }
 
-.form-wrapper{
+.form-div{
     display: flex;
     flex-wrap: wrap;
 }
 
-.form-wrapper.outlined{
+.form-div .warning{
+    display:inline-block;
+    width : 100%;
+}
+
+.warning {
+    color:red;
+}
+
+.outlined{
     outline: 1px solid black;
     padding-left:1em;
     width:80%;
@@ -62,12 +71,12 @@
     
 }
 
-.form-wrapper > span{
+.form-div > span{
     width:45%;
 }
 
 
-.form-wrapper  input{
+.form-div  input{
     border-radius: 0.5em;
     width:75%;
     height:2em;
@@ -76,20 +85,34 @@
     padding-left:1em;
 }
 
-.form-wrapper  input[type="checkbox"]{
+.form-div label{
+    display:inline-block;
+    width:100%;
+}
+
+.form-div select{
+    background-color:white;
+}
+
+.form-div  input[type="checkbox"]{
     border-radius: 0.5em;
     width: auto;
     height:2em;
 }
 
-.form-wrapper select{
+.form-div  input[readonly]{
+    background-color: rgb(220,220,220);
+    pointer-events: none;
+}
+
+.form-div select{
     border-radius: 0.5em;
     height:2em;
     font-size:1.1em;
     width:5em;
 }
 
-.form-wrapper select.big{
+.form-div select.big{
     border-radius: 0.5em;
     height:2em;
     font-size:1.1em;

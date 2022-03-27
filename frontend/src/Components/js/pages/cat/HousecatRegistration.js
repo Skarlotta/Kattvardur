@@ -1,100 +1,11 @@
 import React, {Component} from 'react';
 import {MultistepForm, Progressbar} from '../../misc/MultistepForm';
-import CountrySelector from '../../misc/CountrySelector';
 import "../../../css/forms.css";
+import {CatForm} from '../../misc/forms/Forms';
+import Person from '../../Models/Person/Person';
+import { isValidIsSSN } from '../../../../Site_code/util';
 //<DatePicker dateFormat="dd/MM/yyyy" selected={cat.birthdate} onChange={date => changeCat("birthdate", date)}></DatePicker>
 
-const BasicInformation = ({changeCat, warnings, cat}) => <div>
-        <h3>Upplýsingar kattar</h3>
-        <div className="form-wrapper"> 
-            <span>
-            <b>Nafn kattar</b><i className="warning">{warnings.name}</i><br></br>
-                <input value={cat.name} onChange={e => changeCat("name",e.target.value)}></input>
-
-            </span>
-            <span>
-            <b>Kyn</b><br></br>
-                <select value={cat.gender} onChange={e => changeCat("gender", e.target.value)}> 
-                    <option value="male">Fress</option>
-                    <option value="female">Læða</option>
-                </select>
-            </span>
-            <span>
-                <b>Fæðingadagur</b><i className="warning">{warnings.birthdate}</i><br></br>
-                <input type="date" value={cat.birth_date} onChange={e => changeCat("birth_date",e.target.value)}></input>
-            </span>
-            <span>
-                <b>Skráningarnúmer</b><br></br>
-                <input value={cat.registry_digits} onChange={e => changeCat("registry_digits",e.target.value)}></input>
-            </span>
-            <span>
-            <b>EMS</b><i className="warning">{warnings.ems}</i><br></br>
-                <select onChange={e => changeCat("breed", e.target.value)} value={cat.breed}>
-                    <option value="HCS">HCS</option>
-                    <option value="HCL">HCL</option>
-                </select>
-                <input onChange={e => changeCat("color",e.target.value)} value={cat.color}></input>
-            </span>
-            <span>
-            <b>Örmerki</b> <i className="warning">{warnings.microchip}</i><br></br>
-                <input onChange={e => changeCat("microchip",e.target.value)} value={cat.microchip}></input>
-            </span>
-        </div>
-    </div>;
-
-const OwnerInformation = ({kt, changeKt, getOwner, owners, changeOwner, warning}) => {
-    let ownerTable = owners.map((x,i) => {
-        return <div key={x.ssn} className="form-wrapper outlined">
-            <h3 style={{width:"100%"}}>Eigandi {i+1}</h3><br/>
-            <span>
-                <b>Nafn</b><br></br>
-                <input onChange={(e) => changeOwner(i, "name", e.target.value)} value={x.name}></input>
-            </span>            
-            <span>
-                <b>Kennitala</b><br></br>
-            <input disabled={true} value={x.ssn}></input>
-            </span>
-            <span>
-                <b>Heimilisfang</b><br></br>
-            <input onChange={(e) => changeOwner(i, "address", e.target.value)} value={x.address}></input>
-                </span>            
-            <span>
-                <b>Póstfang</b>    <br></br>            
-            <input onChange={(e) => changeOwner(i, "postcode", e.target.value)} value={x.postcode}></input>
-            </span>
-            <span>
-                <b>Borg</b><br></br>
-            <input onChange={(e) => changeOwner(i, "city", e.target.value)} value={x.city}></input>
-                </span>            
-            <span>
-                <b>Land</b><br></br>
-                <CountrySelector onChange={(e) => changeOwner(i, "country", e.target.value)} className="big" value={x.country}></CountrySelector>
-            </span>
-            <span>
-                <b>Netfang</b><br></br>
-            <input onChange={(e) => changeOwner(i, "email", e.target.value)} value={x.email}></input>
-                </span>            
-            <span>
-                <b>Símanúmer</b><br></br>
-            <input onChange={(e) => changeOwner(i, "phone", e.target.value)} value={x.phone||""}></input>
-            </span>
-        </div>
-    });
-    return <div>
-        <h3>Eigendur</h3>
-        <div className="form-wrapper">
-            <span>
-                <i className="warning">{warning}</i><br/>
-                <b>Sláðu inn kennitölu eiganda</b><br/>
-                <input value={kt} onChange={changeKt}></input><br/>
-                <span onClick={getOwner} className="form-button inline">Leita</span>
-            </span>
-        </div>
-        <div>
-            {ownerTable}
-        </div>
-    </div>
-}
 
 const Confirm = ({cat, owners, validEms}) =>{
     var val = null;
@@ -161,7 +72,7 @@ class HousecatRegistration extends Component{
             owners : [
 
             ],
-            page : 2
+            page : 1
         }
         this.changeCat = this.changeCat.bind(this);
         this.lastPage = this.lastPage.bind(this);
@@ -170,7 +81,6 @@ class HousecatRegistration extends Component{
         this.validateEms = this.validateEms.bind(this);
         this.changeOwner = this.changeOwner.bind(this);
         this.onSave = this.onSave.bind(this);
-        
     }
 
     componentDidMount(){
@@ -201,36 +111,22 @@ class HousecatRegistration extends Component{
     }
 
     getOwner(){
-        if(this.state.kt.length < 10){
+        if(!isValidIsSSN(this.state.kt)){
+            console.log("Invalid");
             return;
         }
-        let d = JSON.stringify({
-            filter:{
-                ssn: this.state.kt
-            }
-        })
-        fetch("/api/v1/folk?data="+d).then(data => data.json()).then(
+        fetch("/api/v1/person/?ssn="+encodeURI(this.state.kt)).then(data => data.json()).then(
             data => {
                 let owners = this.state.owners;
-                let newOwner = {
-                    id:null,
-                    name:"",
-                    ssn:this.state.kt,
-                    address:"",
-                    postcode:"",
-                    city:"",
-                    country:"ISL",
-                    email:"",
-                    phone:""
-                }
-                if(data.results.length === 1){
+                let newOwner = new Person();
+                if(data.length === 1){
                     if(owners.find(x=>x.id === data.results[0].id)){
                         return;
                     }
-                    newOwner = data.results[0];
+                    newOwner.obj = data[0];
                 }
                 owners.push(newOwner);
-                this.setState({ owners})
+                this.setState({owners})
             }
         )
     }
@@ -281,7 +177,7 @@ class HousecatRegistration extends Component{
                     valid = false;
                     warnings.owners = "Í það minnsta einn eigandi verður að vera skráður";
                 } else{
-                    if(this.state.owners.find(x => x.name === "")){
+                    if(this.state.owners.find(x => x.obj.name === "")){
                         valid = false;
                         warnings.owners = "Allir eigendur þurfa nafn";
                     }
@@ -302,17 +198,20 @@ class HousecatRegistration extends Component{
 
     changeOwner(i, f, v){
         let owners = this.state.owners;
-        owners[i][f] = v;
+        owners[i].setField(f, v);
         this.setState({owners});
     }
 
     validateEms(){
-        fetch("/api/v1/ems/"+this.state.cat.breed+"/"+this.state.cat.color.split(" ").join("_")).then(data => data.json()).then(data => {
+        fetch("/api/v1/ems/e?search="+encodeURI(this.state.cat.breed+" "+this.state.cat.color)).then(data => data.json()).then(data => {
             this.setState({validEms: data.success});
         })
     }
 
     render(){
+        let owners = this.state.owners.map((person,i) => {
+            return <div className="outlined">{person.form((key, val) => this.changeOwner(i, key, val), this.state.warnings, [], ["ssn"])}</div>;
+        })
         return <div>
             <Progressbar currentStep={this.state.page} totalSteps={2}></Progressbar>
             <h2 style={{paddingLeft:"10%", paddingTop:"2em"}}>Skrá húskött</h2>
@@ -322,10 +221,20 @@ class HousecatRegistration extends Component{
             nextPage={this.nextPage}
             onSave={this.onSave}
             >
-                <BasicInformation changeCat={this.changeCat} warnings = {this.state.warnings.cat} cat={this.state.cat}></BasicInformation>
-                <OwnerInformation warning={this.state.warnings.owners} changeOwner={this.changeOwner} changeKt={e => this.setState({kt:e.target.value})} kt={this.state.kt} getOwner={this.getOwner} owners={this.state.owners}>
-
-                </OwnerInformation>
+                <CatForm changeCat={this.changeCat} warnings = {this.state.warnings.cat} cat={this.state.cat}></CatForm>
+                <div>        
+                    <h3>Eigendur</h3>
+                        <div className="form-wrapper">
+                            <span>
+                                <b>Sláðu inn kennitölu eiganda</b><br/>
+                                <input value={this.state.kt} onChange={e => this.setState({kt:e.target.value})}></input><br/>
+                                <span onClick={this.getOwner} className="form-button inline">Leita</span>
+                            </span>
+                        </div>
+                    <div>
+                        {owners}
+                    </div>
+                </div>
                 <Confirm validEms={this.state.validEms} cat={this.state.cat} owners={this.state.owners}></Confirm>
             </MultistepForm>
         </div>
