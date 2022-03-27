@@ -2,7 +2,7 @@ import React from 'react';
 import { Component , useEffect} from 'react';
 import {Tabview, Tab} from '../../Profile/ProfileComponents/Tabview';
 import Person from '../../Models/Person';
-import {CatSiblings, CatLitters, CatJudgements, CatAwards, CatCerts, CatFamilyTree} from '../../Models/Cat/Cat';
+import {CatSiblings, CatLitters, CatJudgements, CatAwards, CatCerts, CatFamilyTree} from '../../Models/Cat';
 
 function Other({id}){
     return <h2>{id}</h2>

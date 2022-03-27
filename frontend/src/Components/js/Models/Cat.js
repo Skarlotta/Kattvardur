@@ -1,11 +1,11 @@
 import React from 'react';
 import { useEffect} from 'react';
 import {Link} from 'react-router-dom';
-import urls from '../../../../Site_code/urls';
-import {EntrantOverview, NominationOverview} from '../../Models/Show/Judgement';
-import {SortableTable, SortableHeading} from '../../misc/SortableTable';
-import CatTree from './CatTree';
-import '../../../css/show.css'; 
+import urls from '../../../Site_code/urls';
+import {EntrantOverview, NominationOverview} from '../Models/Show/Judgement';
+import {SortableTable, SortableHeading} from '../misc/SortableTable';
+import CatTree from './Cat/CatTree';
+import '../../css/show.css'; 
 
 
 const CatRow = ({cat}) => <tr>
