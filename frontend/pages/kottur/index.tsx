@@ -4,8 +4,26 @@ import Searchpage from '../../components/search/searchpage';
 import {CatSearchResult} from '../../components/search/searchresults';
 import Cat from '../../models/Cat';
 
+const processCatResults = (cats : any[]) => {
+    let p = new Promise<Cat[]>((resolve, fail) => {
+        let d:number = cats.length;
+        let catArray : Cat[] = [];
+        for(let cat of cats){
+            let newCat = new Cat(cat);
+            newCat.getCattery().then(c => {
+                console.log(c);
+                catArray.push(c);
+                if(catArray.length === d){
+                    resolve(catArray);
+                }
+            })
+        }
+    });
+    return p;
+};
+
 const CatSearchPage: NextPage = () => {
-    return <Searchpage title="Finna Kött" url="/api/v1/cat/" styleData = {CatSearchResult} model={Cat}></Searchpage>;
-}
+    return <Searchpage title="Finna Kött" url="/api/v1/cat/" styleData = {CatSearchResult} processData={processCatResults}></Searchpage>;
+};
 
 export default CatSearchPage

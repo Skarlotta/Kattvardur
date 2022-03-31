@@ -1,9 +1,10 @@
 import Model from './Model';
+import Cattery from './Cattery';
+import fetcher from '../fetcher';
 
 interface CatEms {
     date : Date,
     ems : string
-    
 }
 
 interface Registration  {
@@ -32,7 +33,8 @@ interface CatObject {
 
 class Cat extends Model{
     url:string = "/cat";
-    object:CatObject;    
+    object:CatObject;   
+    cattery?:Cattery = undefined; 
     
     constructor(object?:CatObject){
         super(object);
@@ -54,6 +56,20 @@ class Cat extends Model{
             colors : [],
             registries : []
         };
+    }
+
+    getCattery() : Promise<Cat> {
+        if(!this.object.cattery){
+            return new Promise<Cat>((resolve, fail) => {
+                resolve(this);
+            });
+        }
+        return new Promise<Cat>((resolve, fail) => {
+            fetcher("/api/v1/cattery/"+this.object.cattery?.toString()+"/").then(data =>{ 
+                this.cattery = new Cattery(data);
+                resolve(this);
+            });
+        });
     }
 }
 

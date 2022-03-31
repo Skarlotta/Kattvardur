@@ -2,6 +2,7 @@ interface ModelInterface {
     readonly url : string;
     defaultObject() : any;
     save() : void;
+
     object: any;
 }
 

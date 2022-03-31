@@ -12,8 +12,9 @@ const SearchResult = ({children} : Props) => <div>
 </div>;
 
 const CatSearchResult = (cat: Cat) => {
+    let fullName = cat.cattery ? (cat.cattery.object.prefix ? cat.cattery.object.name +" "+ cat.object.name : cat.object.name +" "+ cat.cattery.object.name) : cat.object.name;
     return <SearchResult>
-        <span><b>{cat.object.name}</b></span>
+        <span><b>{fullName}</b></span>
     </SearchResult>;
 }
 

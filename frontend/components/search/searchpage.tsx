@@ -7,10 +7,10 @@ type Props = {
     title : string,
     url : string,
     styleData : Function,
-    model : typeof Model
+    processData :  Function
 }
 
-const Searchpage = ({title, url, styleData, model} : Props) => {
+const Searchpage = ({title, url, styleData, processData} : Props) => {
     let [firstLoad, setFirstLoad] : [boolean, Function]= useState(false);
     let [data, setData] : [any[], Function]= useState([]);
     let [loading, setLoading] : [boolean, Function]= useState(false);
@@ -22,10 +22,10 @@ const Searchpage = ({title, url, styleData, model} : Props) => {
         setLoading(true);
         setFirstLoad(true);
         fetcher(url + "?search=" + encodeURIComponent(query)).then(d => {
-            setData(d.map((item:any) => {
-                return new model(item);
-            }));
-            setLoading(false);
+            processData(d).then((d:any[]) => {
+                setData(d);
+                setLoading(false);
+            });
         });
     }
     
