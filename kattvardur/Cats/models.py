@@ -8,7 +8,7 @@ from Breeds.models import EMS
 class Cat(models.Model):
     id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 50)
-    registration_class = models.CharField(max_length = 3, null = True, default = "", blank=True)
+    registration_class = models.CharField(max_length = 3, null = False, default = "REG", blank=True)
     country = models.CharField(max_length = 3, null = True, default = "", blank=True)
     birth_date = models.DateField(null = True, blank=True)
     isMale = models.BooleanField()
@@ -49,6 +49,9 @@ class Registry(models.Model):
 
     def __str__(self):
         return self.Organization.short + " " + self.registry_number + " - " + self.cat.name
+
+    def registry_string(self):
+        return self.Organization.short + " " +self.cat.registration_class + " "+ self.registry_number
 
 class Microchip(models.Model):
 	cat = models.ForeignKey(Cat,on_delete=models.CASCADE)

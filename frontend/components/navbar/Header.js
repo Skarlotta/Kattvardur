@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "../../styles/Headercomponents.module.css";
-import Link from 'next/link'
+import Link from 'next/link';
 import Dropdown from './Dropdown';
 
 function NavBar({links}){

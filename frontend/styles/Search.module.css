@@ -30,3 +30,55 @@
     border:2px solid white;
     cursor: pointer;
 }
+
+
+.searchpage ul{
+    text-align: center;
+    font-size:1.25em;
+    position:relative;
+}
+
+.searchpage{
+    width:50%;
+    left:50%;
+    top:15%;
+    position: absolute;
+    transform:translate(-50%,0);
+}
+
+
+.searchbar{
+    left:50%;
+    transform:translateX(-50%);
+    position: relative;
+}
+
+.bubble{
+    color: white;
+    border-radius: 1em;
+    margin-right: .75em;
+    padding-left: .5em;
+    padding-right: .5em;
+} 
+
+.bubble.red{
+    background-color:red;
+}
+
+.bubble.orange{
+    background-color:var(--orange);
+}
+
+.bubble.green{
+    background-color:green;
+}
+
+.search_result{
+    width:80%;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+}
+
+.search_result h2{
+    margin-bottom:0;
+}

@@ -11,6 +11,7 @@ interface Registration  {
     Organization : number,
     registry_date : Date,
     registry_number : string, 
+    registry : string, 
     active : boolean,
     imported : boolean
 }
@@ -25,7 +26,7 @@ interface CatObject {
     dam? : number,
     sire? : number,
     cattery? : number,
-    microchip : string[],
+    microchips : any[],
     colors : CatEms[],
     registries : Registration[]
 }
@@ -52,7 +53,7 @@ class Cat extends Model{
             dam : undefined,
             sire : undefined,
             cattery : undefined,
-            microchip : [],
+            microchips : [],
             colors : [],
             registries : []
         };

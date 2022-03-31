@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from Cats.models import Cat, Registry, Microchip,Catcolor
+from Organizations.models import Organization
 
 class MicrochipSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,9 +19,12 @@ class CatColorSerializer(serializers.ModelSerializer):
         fields = ['date','ems']
 
 class RegistrySerializer(serializers.ModelSerializer):
+    registry = serializers.SlugField(
+        source = 'registry_string'
+    )
     class Meta:
         model = Registry
-        fields = ['Organization', 'registry_date','registry_number','active','imported']
+        fields = ['Organization', 'registry', 'registry_date','registry_number','active','imported']
 
 class CatSerializer(serializers.ModelSerializer):    
     microchips = MicrochipSerializer(many=True, source='microchip_set')
