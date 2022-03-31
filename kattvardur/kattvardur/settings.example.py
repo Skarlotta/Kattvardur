@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'Cats',
     'Breeds',
     'Awards',
-    'Shows'
+    'Shows',
     'API',
 ]
 

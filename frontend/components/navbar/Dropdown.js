@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../css/Dropdown.css";
+import "../../styles/Dropdown.module.css";
 
 
 const Toggle = (props) => <span className="navbar-toggle" onMouseEnter ={props.handleOnMouseEnter}>

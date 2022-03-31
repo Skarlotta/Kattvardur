@@ -8,8 +8,16 @@ body, html {
     font-family: 'Open Sans',Helvetica,Arial,sans-serif;
     background-position-x: -25em;
 }
-#header {
+
+main {
+    margin-left:20%;
+    margin-right:20%;
+}
+
+.header {
     padding-top: 22px;
+    padding-bottom: 4em;
+    margin-bottom: 2em;
     height: 72px;
     border-bottom: 1px solid var(--orange);
     background-color:white;

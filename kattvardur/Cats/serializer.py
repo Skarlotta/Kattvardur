@@ -58,7 +58,6 @@ class CatSerializer(serializers.ModelSerializer):
         return cat
 
     def update(self, instance, validated_data):
-        print("AAAAAAAAAAAA")
         for attr, value in validated_data.items():
             print(attr,value)
         instance.save()
