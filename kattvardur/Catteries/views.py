@@ -17,7 +17,7 @@ class CatteryViewSet(viewsets.ModelViewSet):
     search_fields =[
             'name', 
             'country', 
-            'organization',
+            'organization__name',
             'email',
             'address',
             'city',

@@ -1,7 +1,8 @@
 import React, {useState, ReactElement} from 'react';
 import Searchbar from './searchbar';
-import fetcher from '../../fetcher';
-import Model from '../../models/Model';
+import fetcher from '../../../fetcher';
+import Model from '../../../models/Model';
+import styles from '../../styles/Search.module.css';
 
 type Props = {
     title : string,
@@ -11,9 +12,9 @@ type Props = {
 }
 
 const Searchpage = ({title, url, styleData, processData} : Props) => {
-    let [firstLoad, setFirstLoad] : [boolean, Function]= useState(false);
-    let [data, setData] : [any[], Function]= useState([]);
-    let [loading, setLoading] : [boolean, Function]= useState(false);
+    let [firstLoad, setFirstLoad] = useState<boolean>(false);
+    let [data, setData] = useState<any>([]);
+    let [loading, setLoading] = useState<boolean>(false);
 
     function getResult(query: string){
         if(loading){
@@ -30,7 +31,7 @@ const Searchpage = ({title, url, styleData, processData} : Props) => {
     }
     
     let results : ReactElement[] = data.map((d : any) => styleData(d) );
-    return <div>
+    return <div className={styles.searchPage}>
         <h2>{title}</h2>
         <Searchbar onSearch={getResult}></Searchbar>
         <div>

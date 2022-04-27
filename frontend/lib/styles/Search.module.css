@@ -38,12 +38,16 @@
     position:relative;
 }
 
-.searchpage{
+.searchPage{
     width:50%;
     left:50%;
     top:15%;
     position: absolute;
     transform:translate(-50%,0);
+}
+
+.searchPage>h2{
+    text-align: center;
 }
 
 

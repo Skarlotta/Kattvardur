@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useState } from 'react';
-import Searchpage from '../../components/search/searchpage';
-import {CatSearchResult} from '../../components/search/searchresults';
+import Searchpage from '../../lib/components/search/searchpage';
+import {CatSearchResult} from '../../lib/components/search/searchresults';
 import Cat from '../../models/Cat';
 
 const processCatResults = (cats : any[]) => {

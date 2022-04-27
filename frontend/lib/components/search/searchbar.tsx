@@ -10,12 +10,12 @@ type Props = {
   // Easiest way to declare a Function Component; return type is inferred.
 const Searchbar = ({onSearch }: Props) => {
     let [searchterm, changesearchterm] = useState("");
-    return <div>
+    return <form onSubmit={(e)=>{e.preventDefault()}}>
         <div className={styles.searchbar}>
             <input autoComplete="off" value={searchterm} onChange={x => changesearchterm(x.target.value)}></input>
             <button className = {styles.searchbutton} onClick={e => onSearch(searchterm)}></button>
         </div>
-    </div>
+    </form>
 };
 
 export default Searchbar;

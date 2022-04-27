@@ -1,5 +1,6 @@
 import React, {ReactElement, useEffect} from 'react';
 import Cat from '../../models/Cat';
+import Cattery from '../../models/Cattery';
 import styles from '../../styles/Search.module.css';
 import Link from 'next/link';
 
@@ -29,4 +30,20 @@ const CatSearchResult = (cat: Cat) => {
     </SearchResult>;
 }
 
-export {SearchResult, CatSearchResult}
+const CatterySearchResult = (cattery: Cattery) => {
+    let catteryName = cattery.object.name;
+    let address = (cattery.object.address || "Óþekkt heimilisfang") + " " + (cattery.object.postcode || "") + " " + (cattery.object.city || "");
+    let contact = (cattery.object.phone || "Óþekkt símanúmer") +" - " + (cattery.object.email || "Óþekkt netfang") +" - " + (cattery.object.website || "Óþekkt vefsvæði");
+
+    return <SearchResult>
+        <Link href={"/kottur/"+cattery.object.id.toString()+"/"}><a>
+            <span><h2>{catteryName} - <i>{cattery.object.country}</i></h2> 
+            <span>{address}</span> <br></br>
+            <span>{contact}</span></span>
+        </a>
+        </Link>
+    </SearchResult>;
+}
+
+
+export {SearchResult, CatSearchResult, CatterySearchResult}
