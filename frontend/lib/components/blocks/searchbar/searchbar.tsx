@@ -1,6 +1,6 @@
 import React, { useState} from 'react';
 import useSWR from 'swr'
-import styles from '../../styles/Search.module.css';
+import styles from '../../../styles/Search.module.css';
 
 type Props = {
     onSearch : Function

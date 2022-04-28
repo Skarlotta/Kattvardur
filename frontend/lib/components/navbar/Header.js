@@ -13,10 +13,12 @@ function NavBar({links}){
 
 function Brand(){
     return (
-        <a  href="/" className ={styles.brand}>
-            <strong>KYNJAKETTIR</strong>
-            <small>KATTARÆKTARFÉLAG ÍSLANDS</small>
-        </a>
+        <Link  href="/" className ={styles.brand}>
+            <>
+                <strong>KYNJAKETTIR</strong>
+                <small>KATTARÆKTARFÉLAG ÍSLANDS</small>
+            </>
+        </Link>
     );
 }
 

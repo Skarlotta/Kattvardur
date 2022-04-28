@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useState } from 'react';
-import Searchpage from '../../lib/components/search/searchpage';
-import {CatterySearchResult} from '../../lib/components/search/searchresults';
+//import Searchpage from '../../lib/components/search/genericSearch/genericSearch';
+//import {CatterySearchResult} from '../../lib/components/search/genericSearch/searchresults';
 import Cattery from '../../models/Cattery';
 
 const processCatteryResults = (catteries : any[]) => {
@@ -18,7 +18,7 @@ const processCatteryResults = (catteries : any[]) => {
 };
 
 const CatterySearchPage: NextPage = () => {
-    return <Searchpage title="Finna Ræktun" url="/api/v1/cattery/" styleData = {CatterySearchResult} processData={processCatteryResults}></Searchpage>;
+    return null;// <Searchpage title="Finna Ræktun" url="/api/v1/cattery/" styleData = {CatterySearchResult} processData={processCatteryResults}></Searchpage>;
 };
 
 export default CatterySearchPage
