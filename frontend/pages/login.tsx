@@ -1,7 +1,8 @@
 import type { NextPage } from 'next'
+import GoogleLogin from '../lib/components/authentication/GoogleLogin';
 
 const Login: NextPage = () => {
-    return <p>Not implemented</p>;
+    return <GoogleLogin/>;
 }
 
 export default Login
