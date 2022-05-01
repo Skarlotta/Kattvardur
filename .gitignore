@@ -44,3 +44,5 @@ celerybeat-schedule.*
 settings.py 
 hidden/
 env/
+devenv.json
+.env.local

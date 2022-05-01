@@ -6,15 +6,26 @@ import { GoogleLogin } from 'react-google-login';
     A standard login form allowing users to log in via Google Auth.
     Todo - standard login for those that for whatever reason prefer that. 
 */
-class LoginForm extends Component{
-    constructor(props){
-        super();
+
+type P = {
+    clientId? : string,
+    onLogin: (user:any) => void
+}
+
+type PS = {
+    error:string
+}
+
+class LoginForm extends Component<P, PS>{
+    constructor(props: P){
+        super(props);
         this.state = {
-            error : null
+            error : ""
         }
         this.onGoogleFail = this.onGoogleFail.bind(this);
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
         this.GoogleValidate = this.GoogleValidate.bind(this);
+        console.log(props);
     }
 
     //void onGoogleFail - Callback for when Google Oauth fails. Displays an error message
@@ -26,7 +37,7 @@ class LoginForm extends Component{
 
     //void onGoogleSuccess - Callback for when Google Oauth succeeds. Filters out the tokenId and Email and passes it on to validation
     //Dict resp => the response returned by Google 
-    onGoogleSuccess(resp){
+    onGoogleSuccess(resp : any){
         var tokenId = resp.tokenId;
         var data = {
             email : resp.profileObj.email
@@ -36,7 +47,7 @@ class LoginForm extends Component{
 
     //void GoogleValidate - takes the tokenId and user data returned by Google and validates it against the server. 
     //dict data => {email}, string tokenid => the oauth tokenId to be validated.
-    GoogleValidate(data, tokenId){
+    GoogleValidate(data : any, tokenId : string){
         const headers = {
             Authorization: tokenId,
             'Content-Type': 'application/json'
@@ -76,14 +87,14 @@ class LoginForm extends Component{
                 </b>
             </div>
         }
+
         return <>
             {error}
             <GoogleLogin
-            clientId = {process.env.KATTVARDUR_GOOGLE_CLIENT_ID}      
+            clientId = {this.props.clientId||""}      
             buttonText="Innskráning með Google"
             onSuccess={this.onGoogleSuccess} 
-            onFailure={this.onGoogleFail}>
-            </GoogleLogin>
+            onFailure={this.onGoogleFail}/>
         </>;
     }
 }
