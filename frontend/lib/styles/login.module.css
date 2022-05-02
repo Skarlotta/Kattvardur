@@ -1,0 +1,20 @@
+.loginPage{
+    text-align: center;
+}
+
+.loginIntroText{
+    text-align: left;
+    width: 66%;
+    margin-left:50%;
+    transform: translateX(-50%);
+    margin-bottom:2em;
+}
+
+.loginIntroText h2{
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.loginIntroText p{
+    font-size: 1em;
+}

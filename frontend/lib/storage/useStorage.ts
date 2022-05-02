@@ -18,3 +18,21 @@ export const removeStorage = (key : string) => {
     return window.sessionStorage.removeItem(key);
 }
 
+export const getStorageObject = (key : string) => {
+    try{
+        return isBrowser() && JSON.parse(window.sessionStorage.getItem(key) || "{}");
+    } catch{
+        return false;
+    }
+}
+
+export const setStorageObject = (key : string, value : string) => {
+    try{
+        if (!isBrowser()){
+            return false;
+        }
+        return window.sessionStorage.setItem(key, JSON.stringify(value));
+    } catch{
+        return false;
+    }
+}

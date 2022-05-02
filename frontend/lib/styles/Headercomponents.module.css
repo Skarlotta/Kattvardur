@@ -3,27 +3,44 @@
     font-weight: 300;
     color: #262626;
     text-transform: uppercase;
-    font-size: 18px;
     line-height: 1.4;
-    float: left;
     margin-left:1.5em;
+    margin-bottom:1em;
 }
 
 .brand strong{
     display: block;
-    font-size: 22px;
+    font-size: 2em;
     font-weight: 700;
+}
+.brand small{
+    display: block;
+    font-size: 1.25em;
 }
 
 .header{
+    display:flex;
     padding-top: 22px;
-    height: 72px;
+    height: 7em;
     border-bottom: 1px solid var(--orange);
     background-color: white;
+    padding-bottom: 2em;
 }
 
 .brand:hover{
     color:var(--orange)
+}
+
+.navbar{
+  margin-left: auto;
+  order: 2;
+  display:flex;
+  margin-right:2em;
+}
+
+.navbar_link{
+    font-size: 2em;
+    margin-left:1em;
 }
 
 .navbar-toggle{
