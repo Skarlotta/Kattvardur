@@ -6,7 +6,7 @@ import {Cattery} from '../../../types';
 
 const styleData = (cattery:Cattery) => {
     return <GenericSearchResult
-        url={'/raektun/'+cattery.id+"/"}
+        url={'/cattery/'+cattery.id+"/"}
         key={cattery.id}
         heading={cattery.name}
         subheading={cattery.country || ""}

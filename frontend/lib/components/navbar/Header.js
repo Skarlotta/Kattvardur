@@ -4,17 +4,17 @@ import Link from 'next/link';
 
 function NavBar(){
     return (<div className={styles.navbar}>      
-        <Link href="/kottur/">
+        <Link href="/cat/">
             <a className ={styles.navbar_link}>
                 Kettir
             </a>
         </Link>      
-        <Link href="/raektanir/">
+        <Link href="/cattery/">
             <a className ={styles.navbar_link}>
                 Ræktanir
             </a>
         </Link>
-        <Link href="/felagi/">
+        <Link href="/member/">
             <a className ={styles.navbar_link}>
                 Félagar
             </a>

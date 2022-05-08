@@ -1,5 +1,5 @@
 import React, {useState, ReactElement} from 'react';
-import Searchbar from '../../blocks/searchbar/searchbar';
+import Searchbar from '../../blocks/search/searchbar';
 import fetcher from '../../../../fetcher';
 import styles from '../../../styles/Search.module.css';
 

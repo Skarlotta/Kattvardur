@@ -17,7 +17,7 @@ const styleData = (cat:ExtendedCat) => {
         name = cat.name;
     }
     return <GenericSearchResult
-        url={'/kottur/'+cat.id+"/"}
+        url={'/cat/'+cat.id+"/"}
         key={cat.id}
         heading={name}
         subheading={cat.registries[0]?.registry || "Ekkert örmerki skráð"}

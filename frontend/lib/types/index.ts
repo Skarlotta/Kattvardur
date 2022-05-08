@@ -3,3 +3,4 @@ export * from './Color';
 export * from './Microchip';
 export * from './Registry';
 export * from './Cattery';
+export * from './Member';
