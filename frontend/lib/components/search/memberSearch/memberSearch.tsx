@@ -9,7 +9,7 @@ const styleData = (member:Member) => {
         url={'/member/'+member.id+"/"}
         key={member.id}
         heading={member.person.name}
-        subheading={member.person.ssn || ""}
+        subheading={member.id || ""}
         topString={(member.person.address||"Ekkert heimilisfang") + ", " + (member.person.city||"óþekkt borg") + ", " + (member.person.country||"Óþekkt land")}
         bottomString={(member.person.email||"Ekkert tölvupóstfang") + " - " + (member.person.phoneNumber||"Ekkert símanúmer")}
     />

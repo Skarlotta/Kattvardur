@@ -20,7 +20,7 @@ const Login: NextPage<P> = ({clientId}) => {
     }
     return <div className = {styles.loginPage}>
         <div className={styles.loginIntroText}>
-            <h2>Velkomin á Kattvarð, innri gagnagrunn Kynjakatta, Kattaræktarfélags Íslands</h2>
+            <h2>Velkomin á Kattvarð, innri gagnagrunn Kynjakatta - Kattaræktarfélags Íslands</h2>
             <p>
                 Kattvarður er innra stjórnarkerfi félagsins, og heldur það utan um allar upplýsingar um ræktunarketti sem skráðir eru í 
                 félagið, ræktendur þeirra, sýningar á vegum félagsins, og aðra nauðsynlega bókvörslu og stafræn skyldustörf. 

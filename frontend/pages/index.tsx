@@ -5,16 +5,10 @@ import { getStorageObject } from '../lib/storage/useStorage';
 import {User} from '../lib/types/User';
 import {useEffect, useState} from 'react';
 import { useRouter } from 'next/router'
+import { connectAdminLogin } from '../lib/components/authentication/LoginUtils';
 
 
 const Home: NextPage = () => {
-    const router = useRouter();
-	if (typeof window !== 'undefined'){
-        if(!getStorageObject("user")){
-            router.push('/login');
-        }
-    }
-
 	const [user, setUser] = useState<User|undefined>(undefined);
 	useEffect(() => {
 		if(!user){
@@ -35,4 +29,4 @@ const Home: NextPage = () => {
 	</div>
 }
 
-export default Home
+export default connectAdminLogin(Home);
