@@ -1,14 +1,17 @@
 import React from 'react';
 import styles from "../../styles/Headercomponents.module.css";
 import Link from 'next/link';
+import Dropdown from './Dropdown'
 
 function NavBar(){
-    return (<div className={styles.navbar}>      
-        <Link href="/cat/">
-            <a className ={styles.navbar_link}>
-                Kettir
-            </a>
-        </Link>      
+    return (<div className={styles.navbar}>     
+    <Dropdown toggle="Tets">
+    <Link href="/cat/">
+        <a>
+            Kettir
+        </a>
+    </Link>  
+    </Dropdown>      
         <Link href="/cattery/">
             <a className ={styles.navbar_link}>
                 Ræktanir

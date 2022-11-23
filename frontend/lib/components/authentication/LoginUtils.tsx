@@ -1,9 +1,9 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { getStorageObject } from '../../storage/useStorage';
-import type { NextPage } from 'next'
+import type { NextPage } from 'next';
 
 export const connectAdminLogin = (Component: NextPage) => {
-    return () => {
+    const ConnectedAdminComponent = () => {
         const router = useRouter();
         if (typeof window !== 'undefined'){
             if(!getStorageObject("user")){
@@ -13,4 +13,6 @@ export const connectAdminLogin = (Component: NextPage) => {
         }
         return <Component/>
     }
+
+    return ConnectedAdminComponent;
 }

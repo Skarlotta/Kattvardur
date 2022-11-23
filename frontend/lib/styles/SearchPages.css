@@ -6,8 +6,7 @@
 
 .searchpage{
     width:50%;
-    left:50%;
-    top:15%;
+    left:50%; 
     position: absolute;
     transform:translate(-50%,0);
 }

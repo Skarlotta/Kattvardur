@@ -38,9 +38,21 @@
   margin-right:2em;
 }
 
-.navbar_link{
+.navbar_link, .dropdownLink{
     font-size: 2em;
     margin-left:1em;
+}
+
+.dropdownMenu{
+    background-color:white;
+    min-height: 5em;
+    position: absolute;
+    border: 1px solid black;
+}
+
+.dropdownChild{
+    text-align:center;
+    width:100%; 
 }
 
 .navbar-toggle{

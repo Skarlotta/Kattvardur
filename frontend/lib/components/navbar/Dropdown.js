@@ -1,5 +1,5 @@
 import React from 'react';
-import "../../styles/Dropdown.module.css";
+import styles from "../../styles/Headercomponents.module.css";
 
 
 const Toggle = (props) => <span className="navbar-toggle" onMouseEnter ={props.handleOnMouseEnter}>
@@ -24,8 +24,8 @@ class Dropdown extends React.Component{
         this.setState({show:false});
     }
     render(){
-        let  menu= this.state.show ? <div className="dropdown">{React.Children.map(this.props.children,child => <div className="dropdown-child">{child}</div>)}</div> : null;
-        return <div className="navbar-menu-wrapper" onMouseLeave={this.handleOnMouseLeave}>
+        let  menu= this.state.show ? <div className={styles.dropdownMenu}>{React.Children.map(this.props.children,child => <div className={styles.dropdownChild}>{child}</div>)}</div> : null;
+        return <div className={styles.dropdownLink}>
             <Toggle  handleOnMouseEnter={this.handleOnMouseEnter}>{this.props.toggle}</Toggle>
             {menu}
         </div>
