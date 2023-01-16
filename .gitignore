@@ -41,7 +41,6 @@ celerybeat-schedule.*
 # SageMath parsed files 
 *.sage.py 
 
-settings.py 
 hidden/
 env/
 devenv.json

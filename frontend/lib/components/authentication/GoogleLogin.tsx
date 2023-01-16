@@ -79,6 +79,7 @@ class LoginForm extends Component<P, PS>{
     }
 
     render(){
+        const {clientId} = this.props;
         var error = null;
         if (this.state.error) {
             error = <div>
@@ -90,11 +91,12 @@ class LoginForm extends Component<P, PS>{
 
         return <>
             {error}
-            <GoogleLogin
-            clientId = {this.props.clientId||""}      
-            buttonText="Innskráning með Google"
-            onSuccess={this.onGoogleSuccess} 
-            onFailure={this.onGoogleFail}/>
+            {clientId  && <GoogleLogin
+                clientId = {clientId}      
+                buttonText="Innskráning með Google"
+                onSuccess={this.onGoogleSuccess} 
+                onFailure={this.onGoogleFail}/>
+            }
         </>;
     }
 }
