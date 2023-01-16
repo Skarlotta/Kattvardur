@@ -45,7 +45,7 @@ const Login: NextPage<P> = ({clientId}) => {
 export const getStaticProps: GetStaticProps = async (context) => {
     return {
         props:{
-            clientId:process.env.KATTVARDUR_GOOGLE_CLIENT_ID
+            clientId:process.env.KATTVARDUR_GOOGLE_CLIENT_ID || ""
         }
     }
 }
