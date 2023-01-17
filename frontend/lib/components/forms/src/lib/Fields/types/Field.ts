@@ -1,10 +1,24 @@
 export type FieldKey = 'name'
+    | 'gender'
     | 'ems'
+    | 'birthdate'
+    | 'microchip'
+    | 'registry_number'
+    | 'ssn'
+    | 'address'
+    | 'postcode'
+    | 'country'
+    | 'telephone'
+    | 'email'
+    | 'file'
 ;
 
 export type FieldTypes = 'text'
     | 'select'
     | 'checkbox'
+    | 'date'
+    | 'email'
+    | 'file'
 ;
 
 interface FieldValue {
@@ -17,7 +31,7 @@ interface validation {
     message : string,
 }
 
-export interface FormField {
+export interface Field {
     type: FieldTypes,
     key: string,
     values?: FieldValue[],
@@ -26,4 +40,8 @@ export interface FormField {
     label? : string,
     required?: boolean,
     pattern?: validation,
+    placeholder?: string,
+    halfWidth?: boolean,
+    thirdWidth?: boolean,
+    quarterWidth?: boolean,
 }

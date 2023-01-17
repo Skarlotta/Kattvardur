@@ -1,6 +1,10 @@
-import {FormField} from '../../lib/Fields'
+import {Field} from '../../lib/Fields'
+
+export interface FormProps {
+    endpoint : string;
+}
 
 export interface SinglePageFormProps {
     onSubmit: (data: any) => void;
-    fields: FormField[];
+    fields: Field[];
 }
