@@ -1,16 +1,26 @@
 import { text } from "stream/consumers";
 import { Field } from "../../lib/Fields";
+import styles from "../../../../../styles/forms.module.css";
+
+
+const constructClassName = (field : Field) => {
+    const w = field.halfWidth ? styles.halfwidth : field.thirdWidth ? styles.thirdwidth : field.quarterWidth ? styles.quarterwidth : "";    
+    const h = field.doubleHeight ? styles.doubleheight : ""
+    
+    return w +" " + h;
+}
 
 export const transformField = (field : Field, register: any, errors: any) => {
-    console.log(register, errors);
     switch(field.type){
         case 'date' : {
-            return <div key={field.key} >
+            return <div key={field.key}                 
+                className={constructClassName(field)}         
+            >
                 {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
                 {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
-                {field.label && field.label + (field.required ? "*" :"")}
+                {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input    
-                type='date'             
+                type='date'  
                 {
                     ...register(field.key, {
                         ...field
@@ -22,10 +32,12 @@ export const transformField = (field : Field, register: any, errors: any) => {
             </div>
         }
         case 'select' : {
-            return <div key={field.key} >
+            return <div key={field.key} 
+                className={constructClassName(field)}  
+            >
                 {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
                 {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
-                {field.label && field.label + (field.required ? "*" :"")}
+                {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <select                 
                 {
                     ...register(field.key, {
@@ -38,10 +50,12 @@ export const transformField = (field : Field, register: any, errors: any) => {
             </div>
         }
         case 'text' : {
-            return <div key={field.key} >
+            return <div key={field.key} 
+                className={constructClassName(field)} 
+            >
                 {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
                 {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
-                {field.label && field.label + (field.required ? "*" :"")}
+                {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input 
                 type='text' 
                 placeholder={field.placeholder}

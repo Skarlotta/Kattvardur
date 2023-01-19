@@ -1,6 +1,7 @@
 import { SinglePageFormProps } from "./types";
 import { transformField } from "./util";
 import { useForm } from "react-hook-form";
+import styles from "../../../../../styles/forms.module.css";
 
 export const SinglePageForm = ({
     onSubmit,
@@ -10,7 +11,7 @@ export const SinglePageForm = ({
     const fieldComponents = fields.map((f) => transformField(f, register, errors));
     
     return <>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.styledForm} onSubmit={handleSubmit(onSubmit)}>
             {fieldComponents}
             <button type="submit">Submit</button>
         </form>

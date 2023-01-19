@@ -44,4 +44,5 @@ export interface Field {
     halfWidth?: boolean,
     thirdWidth?: boolean,
     quarterWidth?: boolean,
+    doubleHeight?: boolean,
 }
