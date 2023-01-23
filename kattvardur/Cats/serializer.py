@@ -54,7 +54,6 @@ class CatSerializer(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        print(validated_data)
         chip_data = validated_data.pop('microchip_set')
         cat = Cat.objects.create(**validated_data)
         for cd in chip_data:
@@ -62,8 +61,6 @@ class CatSerializer(serializers.ModelSerializer):
         return cat
 
     def update(self, instance, validated_data):
-        for attr, value in validated_data.items():
-            print(attr,value)
         instance.save()
 
         return instance

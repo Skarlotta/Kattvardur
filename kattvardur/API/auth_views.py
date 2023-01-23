@@ -8,20 +8,29 @@ import json
 from django.conf import settings
 
 def Login(request): 
-    print(request.user)
     if request.method != "POST":
         return JsonResponse({"msg":"Method Not Allowed"}, status = 405)
     body = json.loads(request.body)
-    if 'user' not in body or 'password' not in body:
+    if 'username' not in body or 'password' not in body:
         return JsonResponse({"error":"Authentication Failed"},  status=401)
-    u = body['user']
+    u = body['username']
     p = body['password']
     user = authenticate(username = u, password = p)
+    if(user is None):
+        try:
+            potentialUser = User.objects.get(email = u)
+            if(potentialUser):
+                user = authenticate(username = potentialUser.username, password = p)
+        except:
+            pass
+
     if user is not None:
-        if user.person is not None:
-            login(request, user)
-            return JsonResponse(PersonSerializer(user.person).data, status = 200)
-        return JsonResponse({"msg":"authenticated"},status=200)
+        userDict = {
+            "first_name" : user.first_name,
+            "last_name" : user.last_name,
+            "email" : user.email,
+        }
+        return JsonResponse({"user": userDict}, status=200)
     else:
         return JsonResponse({"error":"Authentication Failed"},  status=401)
 
@@ -56,7 +65,6 @@ def OauthLogin(request):
         if ValidateGoogleToken(token_id):
             body = json.loads(request.body)
             email = body['email']
-            print(email)
             try:
                 user = User.objects.get(email__iexact=email)
                 login(request, user)

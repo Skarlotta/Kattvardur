@@ -13,19 +13,55 @@ type P = {
 }
 
 type PS = {
-    error:string
+    error:string,
+    u : string,
+    p : string,
 }
 
 class LoginForm extends Component<P, PS>{
     constructor(props: P){
         super(props);
         this.state = {
-            error : ""
+            error : "",
+            u : "",
+            p : "",
         }
         this.onGoogleFail = this.onGoogleFail.bind(this);
         this.onGoogleSuccess = this.onGoogleSuccess.bind(this);
         this.GoogleValidate = this.GoogleValidate.bind(this);
-        console.log(props);
+        this.login = this.login.bind(this);
+        this.handleLoginResp = this.handleLoginResp.bind(this);
+    }
+
+    login(e : any){
+        e.preventDefault();
+        const {u, p} = this.state;
+        if(!u || !p){
+            return this.setState({error : "Vinsamlegast útfyllið netfang og lykilorð"});
+        }
+        fetch("/api/v1/auth/login", {
+            method: "POST",
+            body: JSON.stringify({
+                username : u,
+                password : p,
+            })
+        }).then(this.handleLoginResp)
+    }
+
+    handleLoginResp(resp : Response){
+        if(resp.status == 200){
+            resp.json().then(dat => {
+                this.props.onLogin(dat.user);
+            })
+        } else if(resp.status == 401 || resp.status == 403){
+            this.setState({
+                error : "Enginn aðgangur fannst fyrir gefið netfang"
+            });
+        } else{
+            this.setState({
+                error : "Óvænt villa, reynið aftur síðar"
+            })
+        }
     }
 
     //void onGoogleFail - Callback for when Google Oauth fails. Displays an error message
@@ -44,7 +80,7 @@ class LoginForm extends Component<P, PS>{
         }
         this.GoogleValidate(data, tokenId);
     }
-
+    
     //void GoogleValidate - takes the tokenId and user data returned by Google and validates it against the server. 
     //dict data => {email}, string tokenid => the oauth tokenId to be validated.
     GoogleValidate(data : any, tokenId : string){
@@ -57,25 +93,7 @@ class LoginForm extends Component<P, PS>{
             method:"POST",
             body:JSON.stringify(data), 
             headers
-        }).then(resp => {
-            console.log(resp);
-            if(resp.status == 200){
-                console.log("200");
-                resp.json().then(dat => {
-                    this.props.onLogin(dat.user);
-                })
-            } else if(resp.status == 401 || resp.status == 403){
-                console.log("401");
-                this.setState({
-                    error : "Enginn aðgangur fannst fyrir gefið netfang"
-                });
-            } else{
-                console.log("err");
-                this.setState({
-                    error : "Óvænt villa, reynið aftur síðar"
-                })
-            }
-        });
+        }).then(this.handleLoginResp);
     }
 
     render(){
@@ -91,6 +109,11 @@ class LoginForm extends Component<P, PS>{
 
         return <>
             {error}
+            <form onSubmit={this.login}>
+                <input placeholder='Netfang' value={this.state.u} onChange={e => this.setState({u : e.target.value})}/><br/>
+                <input type='password' placeholder='Lykilorð' value={this.state.p} onChange={e => this.setState({p : e.target.value})}/><br/>
+                <button>Innskrá</button>
+            </form>
             {clientId  && <GoogleLogin
                 clientId = {clientId}      
                 buttonText="Innskráning með Google"
