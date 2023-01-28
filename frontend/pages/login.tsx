@@ -11,6 +11,10 @@ interface P {
     children: any,
 }
 
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+
 const Login: NextPage<P> = ({clientId}) => {
     const router = useRouter();
     if (typeof window !== 'undefined'){
@@ -34,7 +38,10 @@ const Login: NextPage<P> = ({clientId}) => {
             <GoogleLogin
                     clientId={clientId}
                     onLogin={(user) => {
-                        setStorageObject("user", user);
+                        console.log("Logging!")
+                        setStorageObject("user", user, new Date().getTime() + hour);
+                        console.log("Set Object");
+                        console.log(getStorageObject("user"));
                         router.push('/');
                     }}
                 />

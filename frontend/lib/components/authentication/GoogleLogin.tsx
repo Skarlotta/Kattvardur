@@ -35,6 +35,9 @@ class LoginForm extends Component<P, PS>{
 
     login(e : any){
         e.preventDefault();
+        this.setState({
+            error : ""
+        });
         const {u, p} = this.state;
         if(!u || !p){
             return this.setState({error : "Vinsamlegast útfyllið netfang og lykilorð"});
@@ -49,13 +52,14 @@ class LoginForm extends Component<P, PS>{
     }
 
     handleLoginResp(resp : Response){
+        console.log("Woo!");
         if(resp.status == 200){
             resp.json().then(dat => {
                 this.props.onLogin(dat.user);
             })
         } else if(resp.status == 401 || resp.status == 403){
             this.setState({
-                error : "Enginn aðgangur fannst fyrir gefið netfang"
+                error : "Enginn aðgangur fannst fyrir gefið netfang og lykilorð"
             });
         } else{
             this.setState({
@@ -113,7 +117,7 @@ class LoginForm extends Component<P, PS>{
                 <input placeholder='Netfang' value={this.state.u} onChange={e => this.setState({u : e.target.value})}/><br/>
                 <input type='password' placeholder='Lykilorð' value={this.state.p} onChange={e => this.setState({p : e.target.value})}/><br/>
                 <button>Innskrá</button>
-            </form>
+            </form><br></br>
             {clientId  && <GoogleLogin
                 clientId = {clientId}      
                 buttonText="Innskráning með Google"
