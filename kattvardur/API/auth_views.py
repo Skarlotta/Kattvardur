@@ -1,38 +1,44 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms import ValidationError
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponse
 from People.serializers import PersonSerializer
 import requests
 import json
 from django.conf import settings
 
-def Login(request): 
-    if request.method != "POST":
-        return JsonResponse({"msg":"Method Not Allowed"}, status = 405)
-    body = json.loads(request.body)
-    if 'username' not in body or 'password' not in body:
-        return JsonResponse({"error":"Authentication Failed"},  status=401)
-    u = body['username']
-    p = body['password']
-    user = authenticate(username = u, password = p)
-    if(user is None):
-        try:
-            potentialUser = User.objects.get(email = u)
-            if(potentialUser):
-                user = authenticate(username = potentialUser.username, password = p)
-        except:
-            pass
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-    if user is not None:
-        userDict = {
-            "first_name" : user.first_name,
-            "last_name" : user.last_name,
-            "email" : user.email,
-        }
-        return JsonResponse({"user": userDict}, status=200)
-    else:
-        return JsonResponse({"error":"Authentication Failed"},  status=401)
+@ensure_csrf_cookie
+def Login(request): 
+    if request.method != "POST" and request.method != "GET":
+        return JsonResponse({"msg":"Method Not Allowed"}, status = 405)
+    elif request.method == "GET":
+        return HttpResponse('<b>hello</b>')
+    else: 
+        body = json.loads(request.body)
+        if 'username' not in body or 'password' not in body:
+            return JsonResponse({"error":"Authentication Failed"},  status=401)
+        u = body['username']
+        p = body['password']
+        user = authenticate(username = u, password = p)
+        if(user is None):
+            try:
+                potentialUser = User.objects.get(email = u)
+                if(potentialUser):
+                    user = authenticate(username = potentialUser.username, password = p)
+            except:
+                pass
+
+        if user is not None:
+            userDict = {
+                "first_name" : user.first_name,
+                "last_name" : user.last_name,
+                "email" : user.email,
+            }
+            return JsonResponse({"user": userDict}, status=200)
+        else:
+            return JsonResponse({"error":"Authentication Failed"},  status=401)
 
 def Logout(request):
     if request.user.is_authenticated():

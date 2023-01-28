@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { GoogleLogin } from 'react-google-login';
+import { CSRFTokenString } from '../forms/src/blocks/GenericForm/util';
 
 /*
     A standard login form allowing users to log in via Google Auth.
@@ -46,8 +47,12 @@ class LoginForm extends Component<P, PS>{
             method: "POST",
             body: JSON.stringify({
                 username : u,
-                password : p,
-            })
+                password : p
+
+            }),
+            headers:{
+                'X-CSRFToken':CSRFTokenString() || ''
+            }
         }).then(this.handleLoginResp)
     }
 

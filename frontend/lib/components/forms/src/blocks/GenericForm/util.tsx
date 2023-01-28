@@ -1,6 +1,8 @@
 import { text } from "stream/consumers";
 import { Field } from "../../lib/Fields";
 import styles from "../../../../../styles/forms.module.css";
+import { FieldMap } from "./types";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 
 const constructClassName = (field : Field) => {
@@ -10,19 +12,29 @@ const constructClassName = (field : Field) => {
     return w +" " + h;
 }
 
-export const transformField = (field : Field, register: any, errors: any) => {
+export const transformFieldMap = (fieldmap : FieldMap, register: UseFormRegister<FieldValues>, errors: any) => {
+    let r : JSX.Element[] = [];
+    for(const key in fieldmap){
+        const fields = fieldmap[key];
+        r = r.concat(fields.map(f => transformField(f, register, errors, key)))
+    }
+    return r;
+}
+
+export const transformField = (field : Field, register: UseFormRegister<FieldValues>, errors: any, prefix : string = "") => {
+    const key = prefix + "_" + field.key;
     switch(field.type){
         case 'date' : {
-            return <div key={field.key}                 
+            return <div key={key}                 
                 className={constructClassName(field)}         
             >
-                {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
-                {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
+                {errors[key] && <><span>{errors[key].message}</span><br/></>}
+                {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input    
                 type='date'  
                 {
-                    ...register(field.key, {
+                    ...register(key, {
                         ...field
                     })
                 }>
@@ -32,15 +44,15 @@ export const transformField = (field : Field, register: any, errors: any) => {
             </div>
         }
         case 'select' : {
-            return <div key={field.key} 
+            return <div key={key} 
                 className={constructClassName(field)}  
             >
-                {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
-                {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
+                {errors[key] && <><span>{errors[key].message}</span><br/></>}
+                {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <select                 
                 {
-                    ...register(field.key, {
+                    ...register(key, {
                         ...field
                     })
                 }>
@@ -50,17 +62,17 @@ export const transformField = (field : Field, register: any, errors: any) => {
             </div>
         }
         case 'text' : {
-            return <div key={field.key} 
+            return <div key={key} 
                 className={constructClassName(field)} 
             >
-                {errors[field.key] && <><span>{errors[field.key].message}</span><br/></>}
-                {errors[field.key] && errors[field.key].type === "required" && <><span>this_field_is_required</span><br/></>}
+                {errors[key] && <><span>{errors[key].message}</span><br/></>}
+                {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input 
                 type='text' 
                 placeholder={field.placeholder}
                 {
-                    ...register(field.key, {
+                    ...register(key, {
                         ...field
                     })
                 }
@@ -68,5 +80,37 @@ export const transformField = (field : Field, register: any, errors: any) => {
 
             </div>
         }
+        default : {
+            return <></>;
+        }
     }
 }
+
+function getCookie(name : string) {
+    var cookieValue = null;
+    if(typeof(document) === 'undefined'){
+        return 'nooooo';
+    }
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+export const CSRFTokenString = () => {
+    return getCookie('csrftoken');
+}
+
+export const CSRFToken = () => {
+    const cookie = getCookie('csrftoken')
+    return (
+        <input type="hidden" name="csrfmiddlewaretoken" value={cookie || ''} />
+    );
+};
