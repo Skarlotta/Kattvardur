@@ -3,6 +3,7 @@ import { Field } from "../../lib/Fields";
 import styles from "../../../../../styles/forms.module.css";
 import { FieldMap } from "./types";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import CountrySelector from "../../lib/Fields/src/CountrySelector";
 
 
 const constructClassName = (field : Field) => {
@@ -61,6 +62,7 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
 
             </div>
         }
+        case 'email':
         case 'text' : {
             return <div key={key} 
                 className={constructClassName(field)} 
@@ -69,7 +71,7 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
                 {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input 
-                type='text' 
+                type={field.type}
                 placeholder={field.placeholder}
                 {
                     ...register(key, {
@@ -80,8 +82,40 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
 
             </div>
         }
+
+        case 'checkbox' :{
+            return <div key={key} 
+            className={constructClassName(field)} 
+        >
+            {errors[key] && <><span>{errors[key].message}</span><br/></>}
+            {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
+            {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
+            <input 
+            type='checkbox' 
+            defaultChecked={field.value}
+            {
+                ...register(key, {
+                    ...field
+                })
+            }
+            ></input>
+
+        </div>
+        }
+
+        case 'country':{
+            return <div key={key} 
+            className={constructClassName(field)} 
+        >
+            {errors[key] && <><span>{errors[key].message}</span><br/></>}
+            {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
+            {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
+            <CountrySelector/>
+
+        </div>
+        }
         default : {
-            return <></>;
+            return <b>Missing field definition  &quot;{field.type}&quot;</b>;
         }
     }
 }

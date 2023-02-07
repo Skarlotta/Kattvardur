@@ -15,7 +15,7 @@ const submissionFactory = (onSubmit : (data: any) => void) => {
         const returnDict : dataMap = {};
         for(const key in data){
             const prefix = key.split("_")[0];
-            const _key = key.split("_")[1];
+            const _key = key.split("_").slice(1).join("_");
             returnDict[prefix] = {
                 ...returnDict[prefix],
                 [_key] : data[key]

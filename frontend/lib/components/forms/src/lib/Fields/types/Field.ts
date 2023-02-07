@@ -1,9 +1,9 @@
 export type FieldKey = 'name'
     | 'gender'
-    | 'ems'
-    | 'birthdate'
-    | 'microchip'
-    | 'registry_number'
+    | 'colors'
+    | 'birth_date'
+    | 'microchips'
+    | 'registries'
     | 'ssn'
     | 'address'
     | 'postcode'
@@ -11,6 +11,8 @@ export type FieldKey = 'name'
     | 'telephone'
     | 'email'
     | 'file'
+    | 'registry_date'
+    | 'is_imported'
 ;
 
 export type FieldTypes = 'text'
@@ -19,6 +21,7 @@ export type FieldTypes = 'text'
     | 'date'
     | 'email'
     | 'file'
+    | 'country'
 ;
 
 interface FieldValue {

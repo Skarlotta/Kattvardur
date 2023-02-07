@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
+import { jsonFetch } from '../../fetcher';
 import { connectAdminLogin } from '../../lib/components/authentication/LoginUtils';
-import { SinglePageForm, Housecat, Person } from '../../lib/components/forms';
-import { Cat } from '../../lib/types';
+import { SinglePageForm, Housecat, Person as PersonForm } from '../../lib/components/forms';
+import { transformHouseCat } from '../../lib/components/forms/src/lib/transforms/transforms';
+import { Cat, Person } from '../../lib/types';
 
 
 export const CatTestFormPage: NextPage = () => {
@@ -10,34 +12,22 @@ export const CatTestFormPage: NextPage = () => {
         onSubmit={handleSubmit}
         fields={
             {
-                cat : Housecat,
-                person : Person
+                cat : Housecat
             }
         }
     />
 };
 
-const handleSubmit = (data : any ) => {
-    const {cat, person} = data;
-    fetch("/api/v1/cat", {
+const handleSubmit = async (data : any) => {
+    const {cat} = data;
+    const apiCat = await transformHouseCat(cat);
+
+    jsonFetch<Cat>("/api/v1/cat", {
         method : "POST",
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        body : JSON.stringify(cat)
-    }).then(response => {
-        if(response.status === 200 || response.status === 201){
-            response.json().then((c : Cat) => {
-                console.log("returned cat", c);
-                fetch("/api/v1/cat/"+c.id, {
-                    method: "DELETE"
-                });
-            });
-        } else {
-            console.log("Cat error!");
-        }
-    })
+        body : JSON.stringify(apiCat)
+    }).then(cat => {
+        console.log("I GOT CAT", cat);
+    });
 }
 
 export default connectAdminLogin(CatTestFormPage);

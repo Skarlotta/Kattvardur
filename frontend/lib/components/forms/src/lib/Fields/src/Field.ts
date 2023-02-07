@@ -11,9 +11,9 @@ export const Fields:FieldDict = {
         label:"name",
         required:true,
     }, 
-    'ems' : {
+    'colors' : {
         type: 'text',
-        key: 'ems',
+        key: 'colors',
         label:"ems",
         pattern: {
             value: /^[a-z]{3} [a-z]*(( [0-9 ]*(var)?))?$/i,
@@ -23,7 +23,7 @@ export const Fields:FieldDict = {
     },    
     'gender' : {
         type: 'select',
-        key: 'gender',
+        key: 'isMale',
         label:"gender",
         values: [
             {key : 'male', value:'male'},
@@ -31,15 +31,28 @@ export const Fields:FieldDict = {
         ],
         required:true,
     },   
-    'birthdate' : {
+    'birth_date' : {
         type: 'date',
-        key: 'birthdate',
-        label:"birthdate",
+        key: 'birth_date',
+        label:"birth_date",
+        required:true,
+    },  
+    'registry_date' : {
+        type: 'date',
+        key: 'registry_date',
+        label:"registry_date",
         required:true,
     },   
-    'microchip' : {
+    'is_imported' : {
+        type: 'checkbox',
+        key: 'imported',
+        label:"imported",
+        required:false,
+        value: false,
+    },   
+    'microchips' : {
         type: 'text',
-        key: 'microchip',
+        key: 'microchips',
         label:"microchip",
         required:true,
         pattern: {
@@ -47,13 +60,13 @@ export const Fields:FieldDict = {
             message : 'forms_invalid_microchip_format'
         }
     }, 
-    'registry_number' : {
+    'registries' : {
         type: 'text',
-        key: 'registry_number',
+        key: 'registries',
         label:"registry_number",
         required:true,
         pattern: {
-            value: /^[A-Z]*[0-9]*$/i,
+            value: /^[a-zA-Zá-öÁ-Ö]*[0-9]*$/i,
             message : 'forms_invalid_regnr_format'
         }
     }, 
@@ -80,7 +93,7 @@ export const Fields:FieldDict = {
         required:true,
     },
     'country' : {
-        type: 'text',
+        type: 'country',
         key: 'country',
         label:"country",
         required:true,

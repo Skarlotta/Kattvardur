@@ -51,7 +51,8 @@ class LoginForm extends Component<P, PS>{
 
             }),
             headers:{
-                'X-CSRFToken':CSRFTokenString() || ''
+                'X-CSRFToken':CSRFTokenString() || '',
+                'content-type': 'application/json',
             }
         }).then(this.handleLoginResp)
     }
