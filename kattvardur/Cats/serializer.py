@@ -17,21 +17,16 @@ class EMSField(serializers.Field):
             b = Breed.objects.get(short = e[0])
             c = Color.objects.filter(short = " ".join(e[1:]))
             try:
-                print(20)
                 if(len(c) == 0):
                     c = Color(short = " ".join(e[1:]))
                     c.save()
                 else:
                     c = c[0]
-                print(24)
                 ems = EMS.objects.filter(breed = b, color = c)
-                print(26)
                 if(len(ems) == 0):
-                    print(28)
                     ems = EMS(breed = b, color = c)
                     ems.save()
                 else:
-                    print(32)
                     ems = ems[0]
                 return ems
             except Exception as ex:

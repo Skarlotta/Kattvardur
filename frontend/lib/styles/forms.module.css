@@ -48,3 +48,48 @@ div.quarterwidth{
     font-size:0.9em;
     text-align: left;
 }
+
+.submissionConfirmedWrapper {
+    position: absolute;
+    width : 100vw;
+    height:100vh;
+    left:0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+.submissionConfirmedDiv{
+    position: absolute;
+    width : 50%;
+    height:25%;
+    left:50%;
+    top: 33%;
+    background-color: white;
+    outline: 5px solid var(--lightorange);
+    transform: translate(-50%);
+    text-align: center;
+}
+
+.submissionConfirmedDiv a, .submissionConfirmedDiv button{
+    width: 10%;
+    background-color:var(--orange);
+    color: white;
+    padding:0.33em;
+    margin:0.25em;
+}
+
+
+.submissionConfirmedDiv a:hover, .submissionConfirmedDiv button:hover{
+    cursor: pointer;
+    background-color:var(--lightorange);
+}
+
+
+.failed{
+    color: brown;
+}
+
+.success{
+    color: green;
+}

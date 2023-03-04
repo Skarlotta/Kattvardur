@@ -13,16 +13,16 @@ const constructClassName = (field : Field) => {
     return w +" " + h;
 }
 
-export const transformFieldMap = (fieldmap : FieldMap, register: UseFormRegister<FieldValues>, errors: any) => {
+export const transformFieldMap = (fieldmap : FieldMap, register: UseFormRegister<FieldValues>, errors: any, loading : boolean) => {
     let r : JSX.Element[] = [];
     for(const key in fieldmap){
         const fields = fieldmap[key];
-        r = r.concat(fields.map(f => transformField(f, register, errors, key)))
+        r = r.concat(fields.map(f => transformField(f, register, errors, key, loading)))
     }
     return r;
 }
 
-export const transformField = (field : Field, register: UseFormRegister<FieldValues>, errors: any, prefix : string = "") => {
+export const transformField = (field : Field, register: UseFormRegister<FieldValues>, errors: any, prefix : string = "", loading : boolean = false) => {
     const key = prefix + "_" + field.key;
     switch(field.type){
         case 'date' : {
@@ -32,7 +32,8 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
                 {errors[key] && <><span>{errors[key].message}</span><br/></>}
                 {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
-                <input    
+                <input   
+                disabled = {loading} 
                 type='date'  
                 {
                     ...register(key, {
@@ -51,7 +52,8 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
                 {errors[key] && <><span>{errors[key].message}</span><br/></>}
                 {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
-                <select                 
+                <select   
+                    disabled = {loading}           
                 {
                     ...register(key, {
                         ...field
@@ -71,6 +73,7 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
                 {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
                 {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
                 <input 
+                disabled = {loading} 
                 type={field.type}
                 placeholder={field.placeholder}
                 {
@@ -91,6 +94,7 @@ export const transformField = (field : Field, register: UseFormRegister<FieldVal
             {errors[key] && errors[key].type === "required" && <><span>this_field_is_required</span><br/></>}
             {field.label && <label>{field.label + (field.required ? "*" :"")}</label>}
             <input 
+            disabled = {loading} 
             type='checkbox' 
             defaultChecked={field.value}
             {

@@ -9,6 +9,6 @@ export interface FieldMap{
 }
 
 export interface SinglePageFormProps {
-    onSubmit: (data: any) => void;
+    onSubmit: (data: any, resolve?: any) => void;
     fields: FieldMap
 }

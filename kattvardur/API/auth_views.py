@@ -27,6 +27,7 @@ def Login(request):
                 potentialUser = User.objects.get(email = u)
                 if(potentialUser):
                     user = authenticate(username = potentialUser.username, password = p)
+                    request.user = user
             except:
                 pass
 
@@ -35,7 +36,8 @@ def Login(request):
                 "first_name" : user.first_name,
                 "last_name" : user.last_name,
                 "email" : user.email,
-            }
+            }        
+            login(request, user)       
             return JsonResponse({"user": userDict}, status=200)
         else:
             return JsonResponse({"error":"Authentication Failed"},  status=401)
@@ -85,4 +87,5 @@ def OauthLogin(request):
     except ValidationError:
             return JsonResponse({"error":"Validation Failed"},  status=401)  
     
-
+def ValidateLogin(request):
+    return JsonResponse({"is_authenticated": request.user.is_authenticated})

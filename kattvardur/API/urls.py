@@ -3,7 +3,7 @@ from rest_framework import routers
 from People.views import PersonViewSet
 from Cats.views import CatViewSet
 from Breeds.views import EMSViewSet, BreedViewSet, ColorViewSet
-from API.auth_views import Login, Logout, OauthLogin
+from API.auth_views import Login, Logout, OauthLogin, ValidateLogin 
 from Catteries.views import CatteryViewSet
 from Membership.views import MemberViewSet
 from Organizations.views import OrganizationViewSet
@@ -24,5 +24,6 @@ urlpatterns = [
     path('auth/oauth/', OauthLogin),
     path('auth/login/', Login),
     path('auth/logout/', Logout),
+    path('auth/validate/', ValidateLogin),
     path('', include(router.urls)),
 ] 

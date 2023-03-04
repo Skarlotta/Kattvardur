@@ -12,22 +12,27 @@ export const CatTestFormPage: NextPage = () => {
         onSubmit={handleSubmit}
         fields={
             {
-                cat : Housecat
+                cat : Housecat,
             }
         }
     />
 };
 
-const handleSubmit = async (data : any) => {
+const handleSubmit = async (data : any, resolve: any) => {
     const {cat} = data;
-    const apiCat = await transformHouseCat(cat);
-
-    jsonFetch<Cat>("/api/v1/cat", {
-        method : "POST",
-        body : JSON.stringify(apiCat)
-    }).then(cat => {
-        console.log("I GOT CAT", cat);
-    });
+    try{
+        const apiCat = await transformHouseCat(cat);
+        jsonFetch<Cat>("/api/v1/cat", {
+            method : "POST",
+            body : JSON.stringify(apiCat)
+        }).then(cat => {
+            resolve(true, "Housecat " + cat?.registries[0]?.registry + " created!", "/cat/"+cat.id);
+        }).catch(error => {
+            resolve(false, "Submission failed : " + error.message, "");
+        }); 
+    } catch (ex : any) {
+        resolve(false, "Unexpected error " + ex.message, "");
+    }
 }
 
 export default connectAdminLogin(CatTestFormPage);
