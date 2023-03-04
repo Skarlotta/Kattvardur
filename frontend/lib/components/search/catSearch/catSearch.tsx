@@ -31,16 +31,27 @@ const processCatResults = (cats : ExtendedCat[]) => {
         let num:number = cats.length;
         let catArray : ExtendedCat[] = [];
         for(let cat of cats){
-            fetcher<Cattery>("/api/v1/cattery/" + cat.cattery).then(cattery => {
+            console.log(cat.id, num);
+            if(cat.cattery) {
+                fetcher<Cattery>("/api/v1/cattery/" + cat.cattery).then(cattery => {
                 const newCat : ExtendedCat = cat;
                 newCat.catteryObject = cattery;
                 catArray.push(newCat);
-            }).finally(() => {
+                }).finally(() => {
+                    num--;
+                    if(num<=0){
+                        console.log(catArray);
+                        resolve(catArray);
+                    }
+                })
+            } else {
+                catArray.push(cat);
                 num--;
                 if(num<=0){
+                    console.log(catArray);
                     resolve(catArray);
                 }
-            })
+            }
         }
     });
     return p;
