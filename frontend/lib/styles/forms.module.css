@@ -10,7 +10,7 @@
 }
 
 .styledForm div span{
-    color:red;
+    color:var(--bad);
 }
 .styledForm input, .styledForm select{
     width:90%;
@@ -87,9 +87,9 @@ div.quarterwidth{
 
 
 .failed{
-    color: brown;
+    color: var(--bad);
 }
 
 .success{
-    color: green;
+    color: var(--good);
 }

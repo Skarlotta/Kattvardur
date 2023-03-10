@@ -13,6 +13,7 @@ export type FieldKey = 'name'
     | 'file'
     | 'registry_date'
     | 'is_imported'
+    | 'organization'
 ;
 
 export type FieldTypes = 'text'

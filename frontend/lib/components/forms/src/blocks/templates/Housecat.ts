@@ -9,6 +9,7 @@ export const Housecat: Field[] = [
         message : 'forms_invalid_ems_format'
     },},
     {...Fields.microchips, halfWidth:true},
+    {...Fields.organization, halfWidth:true},
     {...Fields.registries, halfWidth:true},
     {...Fields.registry_date, halfWidth:true},
     {...Fields.is_imported, halfWidth:true}

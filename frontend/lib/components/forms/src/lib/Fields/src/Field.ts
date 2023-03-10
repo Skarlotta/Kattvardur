@@ -116,4 +116,10 @@ export const Fields:FieldDict = {
         label:"file",
         required:false,
     },
+    'organization' : {
+        type: 'select',
+        key: 'organization',
+        label: 'organization',
+        required: true,
+    }
 }

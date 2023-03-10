@@ -1,8 +1,10 @@
 @import url(//fonts.googleapis.com/css?family=Open+Sans:300,400,400italic,600,600italic,700,800);
 
 body, html {
-    --orange: #eeac39;
-    --lightorange: #facb7a;
+    --primary: #eeac39;
+    --secondary: #facb7a;
+    --bad : #C2554F;
+    --good : #00D6BC;
     margin: 0px;
     padding: 0px;
     font-family: 'Open Sans',Helvetica,Arial,sans-serif;

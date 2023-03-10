@@ -17,6 +17,7 @@ class CatAdmin(admin.ModelAdmin):
         MicrochipInline,
         CatColorInline
     ]
+    search_fields = ['cattery__name', 'name', 'registry__registry_number']
 admin.site.register(Cat, CatAdmin)
 
 
