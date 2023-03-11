@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('KATTVARDUR_DJANGO_SECRET_KEY') or "Please set your secret key"
 KATTVARDUR_GOOGLE_CLIENT_ID = os.environ.get('KATTVARDUR_GOOGLE_CLIENT_ID')
+TEST = os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -132,7 +133,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/public/'
 STATIC_ROOT = 'public/'
 
 # Default primary key field type
