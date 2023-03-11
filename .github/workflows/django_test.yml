@@ -24,7 +24,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r kattvardur/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python kattvardur/manage.py test
