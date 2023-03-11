@@ -31,13 +31,3 @@ jobs:
         server-dir: ${{ secrets.ftp_api_dir }}
         local-dir: ./kattvardur/
         
-    - name: apply API migrations
-      uses: garygrossgarten/github-action-ssh@release
-      with:
-        command: echo todo
-        host:  ${{ secrets.ftp_dev_server }}
-        username: ${{ secrets.ftp_dev_user }}
-        password: ${{ secrets.ftp_dev_password }}
-        port: 7822
-      env:
-        CI: true
