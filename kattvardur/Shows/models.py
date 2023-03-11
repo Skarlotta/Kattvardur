@@ -2,7 +2,8 @@ from django.db import models
 from django.db.models.fields.related import ForeignKey, ManyToManyField, OneToOneField
 from Cats.models import Cat
 from People.models import Person
-from Awards.models import Award
+from Awards.models import Award, Certification
+from Breeds.models import EMS
 
 class Entry(models.Model):
     id = models.AutoField(primary_key=True)
@@ -25,6 +26,11 @@ class Entry(models.Model):
             self.judgement = j
         super().save()
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+            models.Index(fields=['show']),
+        ]
 
 class Judge(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -45,6 +51,11 @@ class Show(models.Model):
     awards = models.ManyToManyField(Award)
     def __str__(self):
         return self.name + ". " + str(self.date)
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['date']),
+        ]
 
 class Judgement(models.Model):
     judge = models.ForeignKey(Judge, null=True, on_delete=models.CASCADE)
@@ -53,12 +64,14 @@ class Judgement(models.Model):
     abs = models.BooleanField(default = False)
     comment = models.CharField(max_length = 2048, default = "", blank=True)
     nominations = models.ManyToManyField(Award, through="Nomination")
+
     def __str__(self):
         if hasattr(self, 'litter'):
             return "Litter " + str(self.litter) 
             
         if hasattr(self, 'entry'):
             return "Entry " + str(self.entry) 
+        return "NoneJudgement"
 
     @property
     def entrant(self):        
@@ -76,6 +89,7 @@ class Litter(models.Model):
     show = models.ForeignKey('Show',on_delete=models.CASCADE)
     judgement = OneToOneField("Judgement", null=True, blank = True, on_delete=models.SET_NULL)
     entries = ManyToManyField(Entry)
+    
     def __str__(self):
         return self.catalog + " @ " + self.show.name
 
@@ -93,3 +107,20 @@ class Nomination(models.Model):
 
     def __str__(self):
         return "Nom " + str(self.award) + " <> " + str(self.judgement)
+    
+class CatCertification(models.Model):
+    cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
+    certification = models.ForeignKey(Certification, on_delete=models.RESTRICT)
+    judgement = models.OneToOneField(Judgement, null=True, blank=True, on_delete=models.SET_NULL)
+    date = models.DateField(null=True, blank=True)
+    ems = models.ForeignKey(EMS, null=True, blank=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.cat.name +" "+ self.cat.registry_number + " - " + str(self.certification)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+            models.Index(fields=['date']),
+            models.Index(fields=['ems']),
+        ]

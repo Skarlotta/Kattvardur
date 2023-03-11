@@ -27,7 +27,7 @@
 } 
 
 .bubble.red{
-    background-color:red;
+    background-color:var(--bad);
 }
 
 .bubble.orange{
@@ -35,5 +35,5 @@
 }
 
 .bubble.green{
-    background-color:green;
+    background-color:var(--good);
 }

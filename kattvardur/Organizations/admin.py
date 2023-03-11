@@ -3,5 +3,5 @@ from Organizations.models import Organization
 from django.contrib import admin
 
 class OrganizationAdmin(admin.ModelAdmin):
-    pass
+    search_fields=['name','country']
 admin.site.register(Organization, OrganizationAdmin)

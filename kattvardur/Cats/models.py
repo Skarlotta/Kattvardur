@@ -17,6 +17,14 @@ class Cat(models.Model):
     cattery = models.ForeignKey(Cattery,null=True, on_delete=models.CASCADE)
     neuter = models.DateField(null=True, blank=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['id']),
+            models.Index(fields=['birth_date']),
+            models.Index(fields=['sire']),
+            models.Index(fields=['dam']),
+        ]
+
     @property
     def registry_number(self):
         registry = self.registry_set
@@ -41,17 +49,20 @@ class Catcolor(models.Model):
 
 class Registry(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
-    Organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
     registry_date = models.DateField(null = True)
     registry_number = models.CharField(max_length = 20)
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
-
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+        ]
     def __str__(self):
-        return self.Organization.short + " " + self.registry_number + " - " + self.cat.name
+        return self.organization.short + " " + self.registry_number + " - " + self.cat.name
 
     def registry_string(self):
-        return self.Organization.short + " " +self.cat.registration_class + " "+ self.registry_number
+        return self.organization.short + " " +self.cat.registration_class + " "+ self.registry_number
 
 class Microchip(models.Model):
 	cat = models.ForeignKey(Cat,on_delete=models.CASCADE)

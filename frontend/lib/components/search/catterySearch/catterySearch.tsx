@@ -1,4 +1,3 @@
-import fetcher from '../../../../fetcher';
 import {GenericSearch} from '../genericSearch/genericSearch';
 import {GenericSearchResult} from '../genericSearch/searchresults';
 import {Cattery} from '../../../types';

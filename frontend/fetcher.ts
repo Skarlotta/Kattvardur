@@ -1,4 +1,4 @@
-import { json } from "stream/consumers";
+import { CSRFTokenString } from "./lib/components/forms/src/blocks/GenericForm/util";
 
 type CacheEntry = {
     url : string,
@@ -8,7 +8,31 @@ type CacheEntry = {
 
 const cache : {[key:string]: CacheEntry} = {};
 
-const fetcher = async function<Type>(url : string, ...args:any) : Promise<Type> {
+const csfr = CSRFTokenString();
+
+export const jsonFetch = async function<Type>(url : string, options?:any) : Promise<Type> {
+    const headers = {
+        'X-CSRFToken' : csfr,
+        'content-type' : 'application/json'
+    }
+    return new Promise<Type>((resolve, reject) => {
+        fetch(url, {
+            ...options,
+            headers : {
+                ...options?.headers,
+                ...headers
+            }
+        }).then(res => {
+            if(res.status >= 200 && res.status < 400){
+                res.json().then(resolve);
+            } else {
+                reject(res);
+            }
+        });
+    });
+}
+
+export const cacheFetch = async function<Type>(url : string, ...args:any) : Promise<Type> {
     if(url in cache){
         const entry = cache[url];
         if(Date.now() < entry.ttl){
@@ -32,4 +56,4 @@ const fetcher = async function<Type>(url : string, ...args:any) : Promise<Type> 
     });
 }
 
-export default fetcher;
+export default cacheFetch;

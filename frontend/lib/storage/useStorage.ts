@@ -1,29 +1,26 @@
 const isBrowser = () => typeof window !== 'undefined';
 
-export const getStorage = (key : string) => {
-    return isBrowser() && window.sessionStorage.getItem(key) || "";
-}
-
-export const setStorage = (key : string, value : string) => {
-    if (!isBrowser()){
-        return false;
-    }
-    return window.sessionStorage.setItem(key, value);
-}
-
 export const removeStorage = (key : string) => {
     if (!isBrowser()){
         return false;
     }
-    return window.sessionStorage.removeItem(key);
+    window.localStorage.removeItem(key);
+    window.localStorage.removeItem(key+"-timeout");
+    return true;
 }
 
 export const getStorageObject = (key : string) => {
     try{
         if(isBrowser()){
-            const obj = window.sessionStorage.getItem(key);
-            if(obj){
-                return JSON.parse(obj);
+            const obj = window.localStorage.getItem(key);
+            const timeout = window.localStorage.getItem(key+"-timeout");
+            if(timeout === "-1" || (timeout && new Date().getTime() < parseInt(timeout))){
+                if(obj){
+                    return JSON.parse(obj);
+                }
+            } else {
+                removeStorage(key);
+                return false;
             }
         }
         return false;
@@ -32,12 +29,14 @@ export const getStorageObject = (key : string) => {
     }
 }
 
-export const setStorageObject = (key : string, value : string) => {
+export const setStorageObject = (key : string, value : string, expires? : number) => {
     try{
         if (!isBrowser()){
             return false;
         }
-        return window.sessionStorage.setItem(key, JSON.stringify(value));
+        window.localStorage.setItem(key, JSON.stringify(value));
+        window.localStorage.setItem(key + "-timeout", (expires ? expires : "-1").toString());
+        return true;
     } catch{
         return false;
     }

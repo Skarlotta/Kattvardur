@@ -3,7 +3,7 @@ from Catteries.models import Cattery, CatteryOwner
 from django.contrib import admin
 
 class CatteryAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name']
 admin.site.register(Cattery, CatteryAdmin)
 
 

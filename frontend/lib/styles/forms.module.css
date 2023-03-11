@@ -1,0 +1,95 @@
+.styledForm{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.styledForm div{
+    width:100%;
+    margin:1em 0px;
+}
+
+.styledForm div span{
+    color:var(--bad);
+}
+.styledForm input, .styledForm select{
+    width:90%;
+    margin:1em 0px;
+    border:none;
+    border-bottom: 2px solid var(--lightorange);
+    height:2em;
+    font-size:1.25em;
+    background: none;
+}
+
+div.doubleheight{
+    height:50%;
+    height:4em;
+}
+
+
+div.halfwidth{
+    width:50%;
+}
+
+div.thirdwidth{
+    width:33%;
+}
+
+div.quarterwidth{
+    width:25%;
+}
+.styledForm input:focus, .styledForm select:focus {
+    outline: none;
+}
+.styledForm label{
+    display: block;
+    font-weight: bold;
+    font-size:0.9em;
+    text-align: left;
+}
+
+.submissionConfirmedWrapper {
+    position: absolute;
+    width : 100vw;
+    height:100vh;
+    left:0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+.submissionConfirmedDiv{
+    position: absolute;
+    width : 50%;
+    height:25%;
+    left:50%;
+    top: 33%;
+    background-color: white;
+    outline: 5px solid var(--lightorange);
+    transform: translate(-50%);
+    text-align: center;
+}
+
+.submissionConfirmedDiv a, .submissionConfirmedDiv button{
+    width: 10%;
+    background-color:var(--orange);
+    color: white;
+    padding:0.33em;
+    margin:0.25em;
+}
+
+
+.submissionConfirmedDiv a:hover, .submissionConfirmedDiv button:hover{
+    cursor: pointer;
+    background-color:var(--lightorange);
+}
+
+
+.failed{
+    color: var(--bad);
+}
+
+.success{
+    color: var(--good);
+}
