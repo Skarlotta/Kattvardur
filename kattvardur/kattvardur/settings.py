@@ -28,7 +28,7 @@ KATTVARDUR_GOOGLE_CLIENT_ID = os.environ.get('KATTVARDUR_GOOGLE_CLIENT_ID')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = json.loads(os.environ.get('KATTVARDUR_ALLOWED_HOSTS'))
+ALLOWED_HOSTS = json.loads(os.environ.get('KATTVARDUR_ALLOWED_HOSTS') or "[]")
 
 
 # Application definition
