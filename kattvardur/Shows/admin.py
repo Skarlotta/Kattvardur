@@ -18,6 +18,7 @@ class NominationInline(admin.TabularInline):
     extra = 2
 
 class CatcertInline(admin.TabularInline):
+    autocomplete_fields = ['cat', 'ems']
     model = CatCertification
 
 
@@ -57,6 +58,7 @@ class ShowAdmin(admin.ModelAdmin):
 admin.site.register(Show, ShowAdmin)
 
 class CatCertAdmin(admin.ModelAdmin):
+    readonly_fields=['judgement']
     search_fields = ['ems', 'cat']
     autocomplete_fields = ['ems', 'cat']
 admin.site.register(CatCertification, CatCertAdmin)

@@ -20,6 +20,25 @@ class EMS(models.Model):
     color = models.ForeignKey('Color',on_delete=models.CASCADE)
     group = models.IntegerField(null = True)
         
-
+    @staticmethod
+    def findByString(ems):
+        if ems == None:
+            return None
+        emsString = ems.split()
+        breed = emsString[0]
+        color = ' '.join(emsString[1:])
+        try:
+            b = Breed.objects.get(short = breed)
+            c = Color.objects.get(short = color)
+            ems = EMS.objects.get(breed = b, color = c)
+            return ems
+        except Breed.DoesNotExist:
+            return None
     def __str__(self):
         return self.breed.short + " " + self.color.short
+    
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['breed']),
+        ]

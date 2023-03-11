@@ -3,12 +3,14 @@ from Cats.models import Cat, Registry, Microchip, Catcolor
 
 
 class RegistryInline(admin.TabularInline):
+    autocomplete_fields = ['organization']
     model = Registry
     
 class MicrochipInline(admin.TabularInline):
     model = Microchip
 
 class CatColorInline(admin.TabularInline):
+    autocomplete_fields = ['ems']
     model = Catcolor
 
 class CatAdmin(admin.ModelAdmin):    
@@ -18,15 +20,17 @@ class CatAdmin(admin.ModelAdmin):
         CatColorInline
     ]
     search_fields = ['cattery__name', 'name', 'registry__registry_number']
+    autocomplete_fields = ['dam', 'sire', 'cattery']
+
 admin.site.register(Cat, CatAdmin)
 
 
 class RegistryAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ['organization']
 admin.site.register(Registry, RegistryAdmin)
 
 class CatColorAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ['ems']
 admin.site.register(Catcolor, CatColorAdmin)
 
 

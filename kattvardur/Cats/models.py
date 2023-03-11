@@ -17,6 +17,14 @@ class Cat(models.Model):
     cattery = models.ForeignKey(Cattery,null=True, on_delete=models.CASCADE)
     neuter = models.DateField(null=True, blank=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['id']),
+            models.Index(fields=['birth_date']),
+            models.Index(fields=['sire']),
+            models.Index(fields=['dam']),
+        ]
+
     @property
     def registry_number(self):
         registry = self.registry_set
@@ -46,7 +54,10 @@ class Registry(models.Model):
     registry_number = models.CharField(max_length = 20)
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
-
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+        ]
     def __str__(self):
         return self.organization.short + " " + self.registry_number + " - " + self.cat.name
 

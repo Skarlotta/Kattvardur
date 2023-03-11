@@ -26,6 +26,11 @@ class Entry(models.Model):
             self.judgement = j
         super().save()
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+            models.Index(fields=['show']),
+        ]
 
 class Judge(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -46,6 +51,11 @@ class Show(models.Model):
     awards = models.ManyToManyField(Award)
     def __str__(self):
         return self.name + ". " + str(self.date)
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['date']),
+        ]
 
 class Judgement(models.Model):
     judge = models.ForeignKey(Judge, null=True, on_delete=models.CASCADE)
@@ -61,6 +71,7 @@ class Judgement(models.Model):
             
         if hasattr(self, 'entry'):
             return "Entry " + str(self.entry) 
+        return "NoneJudgement"
 
     @property
     def entrant(self):        
@@ -106,3 +117,10 @@ class CatCertification(models.Model):
 
     def __str__(self):
         return self.cat.name +" "+ self.cat.registry_number + " - " + str(self.certification)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['cat']),
+            models.Index(fields=['date']),
+            models.Index(fields=['ems']),
+        ]

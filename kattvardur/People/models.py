@@ -26,3 +26,10 @@ class Person(models.Model):
 
 	def __str__(self):
 		return self.name + (" - " +self.ssn if self.ssn else "")
+	
+
+	class Meta:
+		indexes = [
+            models.Index(fields=['name']),
+            models.Index(fields=['ssn']),
+        ]

@@ -17,6 +17,12 @@ class Cattery(models.Model):
 	phone = models.CharField(max_length = 50, null=True, blank=True)
 	def __str__(self):
 		return self.name + (" - " + self.organization.short if self.organization else "")
+	
+	class Meta:
+		indexes = [
+            models.Index(fields=['name']),
+        ]
+
 
 class CatteryOwner(models.Model):
     cattery = models.ForeignKey(Cattery, on_delete=models.CASCADE)

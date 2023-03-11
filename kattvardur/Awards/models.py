@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 class Award(models.Model):
 	name = models.CharField(max_length = 50)
@@ -6,7 +7,7 @@ class Award(models.Model):
 	category = models.CharField(max_length = 50, null = True)
 
 	def __str__(self):
-		return self.name + " ("+self.category+")"
+		return self.name + " ("+self.category if self.category else "" +")"
 
 class Title(models.Model):
 	fullName = models.CharField(max_length = 50)
@@ -19,9 +20,9 @@ class Title(models.Model):
 class Certification(models.Model):
 	name = models.CharField(max_length = 7)
 	ranking = models.IntegerField()
-	previous = models.ForeignKey("Certification", related_name ="previous_cert", null=True, blank=True, on_delete=models.SET_NULL)
 	next = models.ForeignKey("Certification", related_name="next_certification", null=True,blank=True, on_delete=models.SET_NULL)
 	title = models.OneToOneField(Title, null = True,blank=True, on_delete=models.SET_NULL)
+	certclass = models.IntegerField()
 
 	def __str__(self):
-		return self.name  +" "+ str(self.ranking) + " " + ("("+str(self.title)+")" if self.title else "")
+		return self.name  +" "+ str(self.ranking) + " " + ("("+str(self.title)+")" if self.title else "") + ((" Previous : " + Certification.objects.get(Q(next = self) & ~Q(name = self.name)).name) if Certification.objects.filter(Q(next = self) & ~Q(name = self.name)).exists() else "")
