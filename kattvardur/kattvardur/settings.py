@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'Awards',
     'Shows',
     'API',
-    'storage'
+    'storages'
 ]
 
 MIDDLEWARE = [
