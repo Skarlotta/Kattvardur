@@ -16,6 +16,7 @@ class Cat(models.Model):
     cattery = models.ForeignKey(Cattery,null=True, blank=True, on_delete=models.CASCADE)
     isNeutered = models.BooleanField(default=False)
     neuterDate = models.DateField(null=True, blank=True)
+    comment = models.TextField(default = "")
 
     class Meta:
         indexes = [
@@ -29,7 +30,7 @@ class Cat(models.Model):
     def registry_number(self):
         registry = self.registry_set
         if(registry.count() > 0):
-            return registry.latest('registry_date').registry_number
+            return registry.latest('registry_date').registry_string()
         else:
             return "[N/A]"
 
