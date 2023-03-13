@@ -50,7 +50,7 @@ class Catcolor(models.Model):
 class Registry(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
-    registry_date = models.DateField(null = True)
+    registry_date = models.DateField(null = True, blank = True)
     registry_number = models.CharField(max_length = 20)
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
