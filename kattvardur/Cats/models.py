@@ -15,7 +15,8 @@ class Cat(models.Model):
     dam = models.ForeignKey('Cat',related_name='dam_children',null=True, blank=True, on_delete=models.PROTECT)
     sire = models.ForeignKey('Cat',related_name='sire_children', null=True, blank=True,on_delete=models.PROTECT)
     cattery = models.ForeignKey(Cattery,null=True, blank=True, on_delete=models.CASCADE)
-    neuter = models.DateField(null=True, blank=True)
+    isNeutered = models.BooleanField(default=False)
+    neuterDate = models.DateField(null=True, blank=True)
 
     class Meta:
         indexes = [
