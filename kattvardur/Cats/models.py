@@ -16,7 +16,7 @@ class Cat(models.Model):
     cattery = models.ForeignKey(Cattery,null=True, blank=True, on_delete=models.CASCADE)
     isNeutered = models.BooleanField(default=False)
     neuterDate = models.DateField(null=True, blank=True)
-    comment = models.TextField(default = "")
+    comment = models.TextField(default = "", blank = True)
 
     class Meta:
         indexes = [
