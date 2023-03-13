@@ -152,7 +152,6 @@ else:
     STATIC_URL = '/public/'
     STATIC_ROOT = os.path.join(BASE_DIR, 'public')
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'public'),)
 
 
 # Default primary key field type
