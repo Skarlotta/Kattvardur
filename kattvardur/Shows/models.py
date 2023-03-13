@@ -58,7 +58,7 @@ class Show(models.Model):
         ]
 
 class Judgement(models.Model):
-    judge = models.ForeignKey(Judge, null=True, on_delete=models.CASCADE)
+    judge = models.ForeignKey(Judge, null=True, blank=True, on_delete=models.CASCADE)
     judgement = models.CharField(max_length = 10, default = "", blank=True) #EX1
     biv = models.BooleanField(default = False)
     abs = models.BooleanField(default = False)
