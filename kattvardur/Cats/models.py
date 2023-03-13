@@ -10,7 +10,7 @@ class Cat(models.Model):
     name = models.CharField(max_length = 50)
     country = models.CharField(max_length = 3, null = True, default = "", blank=True)
     birth_date = models.DateField(null = True, blank=True)
-    registration_class = models.CharField(max_length = 3, null = False, blank=False)
+    registration_class = models.CharField(max_length = 3, null = True, blank=True)
     isMale = models.BooleanField()
     dam = models.ForeignKey('Cat',related_name='dam_children',null=True, blank=True, on_delete=models.PROTECT)
     sire = models.ForeignKey('Cat',related_name='sire_children', null=True, blank=True,on_delete=models.PROTECT)
@@ -60,7 +60,8 @@ class Registry(models.Model):
             models.Index(fields=['cat']),
         ]
     def __str__(self):
-        return self.organization.country + " " + self.organization.short + " " + " " +self.cat.registration_class + " "+ self.registry_number + " - " + self.cat.name
+        rClass = " " + self.cat.registration_class + " " if self.cat.registration_class else " "
+        return self.organization.country + " " + self.organization.short + rClass+ self.registry_number + " - " + self.cat.name
 
     def registry_string(self):
         return self.organization.country + " " + self.organization.short + " " +self.cat.registration_class + " "+ self.registry_number
