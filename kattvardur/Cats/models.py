@@ -10,7 +10,6 @@ class Cat(models.Model):
     name = models.CharField(max_length = 50)
     country = models.CharField(max_length = 3, null = True, default = "", blank=True)
     birth_date = models.DateField(null = True, blank=True)
-    registration_class = models.CharField(max_length = 3, null = True, blank=True)
     isMale = models.BooleanField()
     dam = models.ForeignKey('Cat',related_name='dam_children',null=True, blank=True, on_delete=models.PROTECT)
     sire = models.ForeignKey('Cat',related_name='sire_children', null=True, blank=True,on_delete=models.PROTECT)
@@ -51,20 +50,24 @@ class Catcolor(models.Model):
 class Registry(models.Model):
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete = models.CASCADE)
+    registration_class = models.CharField(max_length = 3, null = True, blank=True)
     registry_date = models.DateField(null = True, blank = True)
     registry_number = models.CharField(max_length = 20)    
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
+    manual_entry = models.BooleanField(default = False)
     class Meta:
         indexes = [
             models.Index(fields=['cat']),
         ]
     def __str__(self):
-        rClass = " " + self.cat.registration_class + " " if self.cat.registration_class else " "
-        return self.organization.country + " " + self.organization.short + rClass+ self.registry_number + " - " + self.cat.name
+        return self.registry_string() + " - " + self.cat.name
 
     def registry_string(self):
-        return self.organization.country + " " + self.organization.short + " " +self.cat.registration_class + " "+ self.registry_number
+        if(self.manual_entry):
+            return self.registry_number
+        rClass = " " + self.registration_class + " " if self.registration_class else " "
+        return self.organization.country + " " + self.organization.short + rClass+ self.registry_number + " - " + self.cat.name
 
 class Microchip(models.Model):
 	cat = models.ForeignKey(Cat,on_delete=models.CASCADE)
