@@ -47,6 +47,9 @@ class EntryAdminInline(admin.TabularInline):
     list_display=('judgement_Link')
     readonly_fields = ('judgement_Link',)
     exclude = ('judgement',)    
+    ordering=['catalog_nr']
+
+    autocomplete_fields = ['cat']
     
     def judgement_Link(self, obj):
         return mark_safe('<a href="/admin/Shows/judgement/{}/change">{}</a>'.format(obj.judgement.pk,

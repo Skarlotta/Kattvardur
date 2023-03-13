@@ -40,9 +40,9 @@ class Judge(models.Model):
 
 class Show(models.Model):
     name = models.CharField(max_length = 51)
-    organizer = models.ForeignKey(Person, related_name='organized', on_delete=models.CASCADE)
-    date = models.DateField()
-    location = models.CharField(max_length = 50, null=True)
+    organizer = models.ForeignKey(Person, related_name='organized', on_delete=models.CASCADE, blank = True, null = True)
+    date = models.DateField(null = True, blank = True)
+    location = models.CharField(max_length = 50, null=True, blank = True)
     visibleToPublic = models.BooleanField(default = True)
     openForRegistration = models.BooleanField(default = False)
     international = models.BooleanField(default = True)

@@ -363,6 +363,7 @@ def Shows(cur, db):
         j.abs = abs if abs else False
         j.comment = comment,
         j.judge = judge
+        j.save()
         db["Judgement"][entry_id] = j
 
     res = cur.execute("SELECT * FROM kkidb_nomination")
