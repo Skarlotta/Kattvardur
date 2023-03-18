@@ -8,7 +8,7 @@ from Breeds.models import EMS
 class Cat(models.Model):
     id = models.AutoField(primary_key = True)
     name = models.CharField(max_length = 50)
-    country = models.CharField(max_length = 3, null = True, default = "", blank=True)
+    country = models.CharField(max_length = 4, null = True, default = "", blank=True)
     birth_date = models.DateField(null = True, blank=True)
     isMale = models.BooleanField()
     dam = models.ForeignKey('Cat',related_name='dam_children',null=True, blank=True, on_delete=models.PROTECT)
@@ -17,6 +17,7 @@ class Cat(models.Model):
     isNeutered = models.BooleanField(default=False)
     neuterDate = models.DateField(null=True, blank=True)
     comment = models.TextField(default = "", blank = True)
+    off_registry = models.BooleanField(default=False)
 
     class Meta:
         indexes = [
@@ -25,6 +26,14 @@ class Cat(models.Model):
             models.Index(fields=['sire']),
             models.Index(fields=['dam']),
         ]
+
+    @property
+    def curr_ems(self):
+        colors = self.catcolor_set
+        if(colors.count() > 0):
+            return str(colors.latest('date').ems)
+        else:
+            return "[N/A]"
 
     @property
     def registry_number(self):
@@ -36,11 +45,11 @@ class Cat(models.Model):
 
     def __str__(self):
         if self.cattery:
-            pre = self.registry_number + " - " + self.cattery.name + " " + self.name 
-            post = self.registry_number + " - " + self.name + " " +self.cattery.name + " "
+            pre = self.registry_number + " - " + self.cattery.name + " " + self.name + " ("+ self.curr_ems+")"
+            post = self.registry_number + " - " + self.name + " " +self.cattery.name + " " + " (" + self.curr_ems+")"
             return pre if self.cattery.prefix else post
         else:
-            return self.registry_number + " - " + self.name 
+            return self.registry_number + " - " + self.name + " " + "("+self.curr_ems+")"
 
 class Catcolor(models.Model):
     date = models.DateField(auto_now=True)
