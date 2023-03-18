@@ -3,6 +3,10 @@ from Cats.models import Cat, Registry, Microchip, Catcolor
 from Shows.models import CatCertification
 
 
+@admin.action(description='Set selected as off-registry cats')
+def set_off_registry(modeladmin, request, queryset):
+    queryset.update(off_registry = True)
+    
 class RegistryInline(admin.TabularInline):
     autocomplete_fields = ['organization']
     model = Registry
@@ -28,6 +32,8 @@ class CatAdmin(admin.ModelAdmin):
     ]
     search_fields = ['cattery__name', 'name', 'registry__registry_number']
     autocomplete_fields = ['dam', 'sire', 'cattery']
+
+    actions = [set_off_registry]
 
 admin.site.register(Cat, CatAdmin)
 
