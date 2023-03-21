@@ -62,7 +62,7 @@ class Registry(models.Model):
     organization = models.ForeignKey(Organization, null=True, blank=True,  on_delete = models.CASCADE)
     registration_class = models.CharField(max_length = 3, null = True, blank=True)
     registry_date = models.DateField(null = True, blank = True)
-    registry_number = models.CharField(max_length = 20)    
+    registry_number = models.CharField(max_length = 32)    
     active = models.BooleanField(default=True)
     imported = models.BooleanField(default=False)
     manual_entry = models.BooleanField(default = False)
