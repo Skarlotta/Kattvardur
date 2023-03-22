@@ -18,7 +18,7 @@ class Color(models.Model):
 class EMS(models.Model):
     breed = models.ForeignKey('Breed',on_delete=models.CASCADE)
     color = models.ForeignKey('Color',on_delete=models.CASCADE)
-    group = models.IntegerField(null = True)
+    group = models.IntegerField(null = True, blank=True)
         
     @staticmethod
     def findByString(ems):

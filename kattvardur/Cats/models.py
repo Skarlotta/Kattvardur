@@ -4,6 +4,8 @@ from django.db.models.deletion import SET_NULL
 from Catteries.models import Cattery
 from Organizations.models import Organization
 from Breeds.models import EMS
+from django.utils.timezone import now
+
 
 class Cat(models.Model):
     id = models.AutoField(primary_key = True)
@@ -31,9 +33,17 @@ class Cat(models.Model):
     def curr_ems(self):
         colors = self.catcolor_set
         if(colors.count() > 0):
-            return str(colors.latest('date').ems)
+            return colors.latest('date').ems
         else:
-            return "[N/A]"
+            return None
+    
+    @property
+    def curr_phenotype(self):
+        colors = self.phenotypecolor_set
+        if(colors.count() > 0):
+            return colors.latest('date').ems
+        else:
+            return None
 
     @property
     def registry_number(self):
@@ -42,17 +52,27 @@ class Cat(models.Model):
             return registry.latest('registry_date').registry_string()
         else:
             return "[N/A]"
+    @property
+    def colorString(self):
+        _ems = self.curr_ems
+        _pheno = self.curr_phenotype
+        return (str(_ems) if _ems else "[N/A]") + ((" [" + _pheno +"]") if _pheno else "")
 
     def __str__(self):
         if self.cattery:
-            pre = self.registry_number + " - " + self.cattery.name + " " + self.name + " ("+ self.curr_ems+")"
-            post = self.registry_number + " - " + self.name + " " +self.cattery.name + " " + " (" + self.curr_ems+")"
+            pre = self.registry_number + " - " + self.cattery.name + " " + self.name + " ("+ self.colorString+")"
+            post = self.registry_number + " - " + self.name + " " +self.cattery.name + " " + " (" + self.colorString+")"
             return pre if self.cattery.prefix else post
         else:
-            return self.registry_number + " - " + self.name + " " + "("+self.curr_ems+")"
+            return self.registry_number + " - " + self.name + " " + "("+self.colorString+")"
 
 class Catcolor(models.Model):
-    date = models.DateField(auto_now=True)
+    date = models.DateField(default=now, null = True, blank = True)
+    cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
+    ems = models.ForeignKey(EMS, on_delete=models.CASCADE)
+
+class PhenotypeColor(models.Model):
+    date = models.DateField(default=now,  null = True, blank = True)
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     ems = models.ForeignKey(EMS, on_delete=models.CASCADE)
 

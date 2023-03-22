@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Cats.models import Cat, Registry, Microchip, Catcolor
+from Cats.models import Cat, Registry, Microchip, Catcolor, PhenotypeColor
 from Shows.models import CatCertification
 
 
@@ -13,10 +13,16 @@ class RegistryInline(admin.TabularInline):
     
 class MicrochipInline(admin.TabularInline):
     model = Microchip
+    extra = 1
 
 class CatColorInline(admin.TabularInline):
     autocomplete_fields = ['ems']
     model = Catcolor
+
+class PhenoColorInline(admin.TabularInline):
+    autocomplete_fields = ['ems']
+    model = PhenotypeColor
+    extra=0
 
 class CertInline(admin.TabularInline):
     model = CatCertification
@@ -28,6 +34,7 @@ class CatAdmin(admin.ModelAdmin):
         RegistryInline,
         MicrochipInline,
         CatColorInline,
+        PhenoColorInline,
         CertInline,
     ]
     search_fields = ['cattery__name', 'name', 'registry__registry_number']
