@@ -67,12 +67,12 @@ class Cat(models.Model):
             return self.registry_number + " - " + self.name + " " + "("+self.colorString+")"
 
 class Catcolor(models.Model):
-    date = models.DateField(default=now, null = True, blank = True)
+    date = models.DateField(null = True, blank = True)
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     ems = models.ForeignKey(EMS, on_delete=models.CASCADE)
 
 class PhenotypeColor(models.Model):
-    date = models.DateField(default=now,  null = True, blank = True)
+    date = models.DateField(null = True, blank = True)
     cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
     ems = models.ForeignKey(EMS, on_delete=models.CASCADE)
 
