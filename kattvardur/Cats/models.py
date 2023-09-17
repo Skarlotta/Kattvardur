@@ -56,7 +56,7 @@ class Cat(models.Model):
     def colorString(self):
         _ems = self.curr_ems
         _pheno = self.curr_phenotype
-        return (str(_ems) if _ems else "[N/A]") + ((" [" + _pheno +"]") if _pheno else "")
+        return (str(_ems) if _ems else "[N/A]") + ((" [" + str(_pheno) +"]") if _pheno else "")
 
     def __str__(self):
         if self.cattery:
