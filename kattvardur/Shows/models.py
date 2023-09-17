@@ -40,9 +40,9 @@ class Judge(models.Model):
 
 class Show(models.Model):
     name = models.CharField(max_length = 51)
-    organizer = models.ForeignKey(Person, related_name='organized', on_delete=models.CASCADE)
-    date = models.DateField()
-    location = models.CharField(max_length = 50, null=True)
+    organizer = models.ForeignKey(Person, related_name='organized', on_delete=models.CASCADE, blank = True, null = True)
+    date = models.DateField(null = True, blank = True)
+    location = models.CharField(max_length = 50, null=True, blank = True)
     visibleToPublic = models.BooleanField(default = True)
     openForRegistration = models.BooleanField(default = False)
     international = models.BooleanField(default = True)
@@ -58,7 +58,7 @@ class Show(models.Model):
         ]
 
 class Judgement(models.Model):
-    judge = models.ForeignKey(Judge, null=True, on_delete=models.CASCADE)
+    judge = models.ForeignKey(Judge, null=True, blank=True, on_delete=models.CASCADE)
     judgement = models.CharField(max_length = 10, default = "", blank=True) #EX1
     biv = models.BooleanField(default = False)
     abs = models.BooleanField(default = False)

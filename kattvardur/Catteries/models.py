@@ -4,7 +4,7 @@ from People.models import Person
 
 class Cattery(models.Model):
 	id = models.AutoField(primary_key = True)
-	registry_date = models.DateField(null = True)
+	registry_date = models.DateField(null = True, blank = True)
 	name = models.CharField(max_length = 50, unique=True)
 	country = models.CharField(max_length = 3,null=True, blank=True)
 	prefix = models.BooleanField()

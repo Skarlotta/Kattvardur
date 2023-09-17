@@ -75,7 +75,7 @@ def Awards(cur, db):
     for (id, name, rank, neuter, next_id, certClass) in certs:
         c = Certification(name = name, ranking = rank, certclass = certClass)
         if id in titlemap:
-            c.title = titlemap[id]
+            c.title = titlemap[id] 
         c.save()
         db["Cert"][id] = c
         tempCertMap[c.id] = (id, next_id)
@@ -192,6 +192,10 @@ def Cats(cur, db):
     for cattery in Cattery.objects.all():
         cats = Cat.objects.filter(name__icontains = cattery.name)
         for cat in cats:
+            if cat.cattery:
+                competitor = cat.cattery
+                if len(cattery.name) < len(competitor.name):
+                    continue
             cat.cattery = cattery
             cat.save()
 
@@ -359,6 +363,7 @@ def Shows(cur, db):
         j.abs = abs if abs else False
         j.comment = comment,
         j.judge = judge
+        j.save()
         db["Judgement"][entry_id] = j
 
     res = cur.execute("SELECT * FROM kkidb_nomination")

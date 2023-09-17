@@ -46,3 +46,6 @@ hidden/
 env/
 devenv.json
 .env.local
+
+kattvardur/public/*
+.DS_Store
