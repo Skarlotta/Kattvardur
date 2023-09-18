@@ -1,0 +1,12 @@
+.prettyTable{
+    width:100%;
+    border-collapse: collapse;
+}
+
+.prettyTable td{
+    text-align: center;
+}
+
+.prettyTable tr:nth-child(2n){
+    background-color: #EEE;
+}

@@ -12,3 +12,4 @@ class PersonViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['ssn']
+    lookup_field='id'

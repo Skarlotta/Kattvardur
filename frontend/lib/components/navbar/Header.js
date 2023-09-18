@@ -22,6 +22,11 @@ function NavBar(){
                 Félagar
             </a>
         </Link>
+        <Link href="/show/">
+            <a className ={styles.navbar_link}>
+                Sýningar
+            </a>
+        </Link>
     </div>);
 } 
 

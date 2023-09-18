@@ -17,7 +17,7 @@ const processValidation = (data: AuthResponse, storage : any, router : NextRoute
     }
 }
 
-export const connectAdminLogin = (Component: NextPage) => {
+export const connectAdminLogin = (Component: NextPage<any>) => {
     const ConnectedAdminComponent = () => {
         const router = useRouter();
         console.log("aaaa");
