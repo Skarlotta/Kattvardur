@@ -6,14 +6,14 @@ import { useEffect, useState } from 'react';
 import { PrettyTable } from '../../lib/components/blocks/ModelTable/ModelTable';
 import { ShowManager } from '../../lib/models/Show';
 
-const ShowPage: NextPage = () => {
+const ShowOverview: NextPage = () => {
     const [shows, setShows] = useState<Show[]>([]);
     useEffect(() => {
         ShowManager.all().then((shows) => {
             setShows(shows.sort((a,b) => b.date < a.date ? -1 : 1));
         });
     }, []);
-    
+
     return <PrettyTable
         fields={["show", "date", "organizer", "location"]}
         objects={shows.map(show => ({
@@ -26,4 +26,4 @@ const ShowPage: NextPage = () => {
 }
 
 
-export default connectAdminLogin(ShowPage);
+export default connectAdminLogin(ShowOverview);

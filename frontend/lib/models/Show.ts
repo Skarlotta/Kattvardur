@@ -2,9 +2,22 @@ import { Person,ApiShow, Show} from '../../lib/types';
 import { jsonFetch } from '../../fetcher';
 import { PersonManager } from './Person';
 
-export const ShowManager = {
+export const ShowManager = {    
+    get : async (id : string) : Promise<Show | undefined>=> {
+        const show : ApiShow = await jsonFetch("/api/v1/show/"+id);
+        if(show){
+            return (await ShowManager.processApiShows([show]))[0];
+        } else {
+            return undefined;
+        }
+    },
     all : (async () => {
-        const shows : (Show | ApiShow)[] = await jsonFetch("/api/v1/show/");
+        const shows : ApiShow[] = await jsonFetch("/api/v1/show/");
+        return await ShowManager.processApiShows(shows);
+    }),
+
+    processApiShows: async (shows : ApiShow[]) : Promise<Show[]> => {
+        const processedShows : Show[] = [];
         const personPromise: Promise<Person>[]= [];
         const personCache : string[]= [];
         for(const show of shows){
@@ -22,16 +35,23 @@ export const ShowManager = {
         }
         const people = await Promise.all(personPromise);
         for(const show of shows){
+            const newShow : Show = {
+                ...show,
+                organizer : undefined,
+                judges : [],
+            }
             if(show.organizer){
-                show.organizer = people.find(p => p.id == show.organizer as string);
+                newShow.organizer = people.find(p => p.id == show.organizer as string);
             }
             for(var i = 0; i < (show.judges?.length || 0); i++){
                 const p = people.find(p => p.id == show.judges[i] as string);
                 if(p){
-                    show.judges[i] = p;
+                    newShow.judges[i] = p;
                 }
             }
+            processedShows.push(newShow);
         }
-        return shows as Show[];
-    })
+
+        return processedShows;
+    }
 }

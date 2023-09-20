@@ -1,0 +1,24 @@
+.navbarWrapper{
+    width:100%;
+    display: flex;
+    padding-top:0.5em;
+}
+
+.navbarWrapper span{
+    color: #0aa678;
+    font-size: 18px;
+    padding-right:2em;
+}
+
+
+.navbarWrapper span.selectedLink{
+    font-weight: bold;
+    color: var(--primary);
+}
+
+
+.navbarWrapper span:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    color: var(--secondary);
+}

@@ -16,7 +16,7 @@
     width:90%;
     margin:1em 0px;
     border:none;
-    border-bottom: 2px solid var(--lightorange);
+    border-bottom: 2px solid var(--secondary);
     height:2em;
     font-size:1.25em;
     background: none;
@@ -66,14 +66,14 @@ div.quarterwidth{
     left:50%;
     top: 33%;
     background-color: white;
-    outline: 5px solid var(--lightorange);
+    outline: 5px solid var(--secondary);
     transform: translate(-50%);
     text-align: center;
 }
 
 .submissionConfirmedDiv a, .submissionConfirmedDiv button{
     width: 10%;
-    background-color:var(--orange);
+    background-color:var(--primary);
     color: white;
     padding:0.33em;
     margin:0.25em;
@@ -82,7 +82,7 @@ div.quarterwidth{
 
 .submissionConfirmedDiv a:hover, .submissionConfirmedDiv button:hover{
     cursor: pointer;
-    background-color:var(--lightorange);
+    background-color:var(--secondary);
 }
 
 

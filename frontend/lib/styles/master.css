@@ -21,7 +21,7 @@ main {
     padding-bottom: 4em;
     margin-bottom: 2em;
     height: 72px;
-    border-bottom: 1px solid var(--orange);
+    border-bottom: 1px solid var(--primary);
     background-color:white;
 }
 
@@ -40,7 +40,7 @@ a.white:hover{
 }
 
 a:hover {
-    color: var(--orange);
+    color: var(--primary);
     cursor: pointer;
 }
 

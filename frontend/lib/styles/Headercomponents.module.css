@@ -22,13 +22,13 @@
     display:flex;
     padding-top: 22px;
     height: 7em;
-    border-bottom: 1px solid var(--orange);
+    border-bottom: 1px solid var(--primary);
     background-color: white;
     padding-bottom: 2em;
 }
 
 .brand:hover{
-    color:var(--orange)
+    color:var(--primary)
 }
 
 .navbar{
@@ -67,7 +67,7 @@
 }
 
 .navbar-toggle:hover {
-    color: var(--orange);
+    color: var(--primary);
     cursor: pointer;
 }
 
