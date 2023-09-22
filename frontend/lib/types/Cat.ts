@@ -17,3 +17,13 @@ export interface Cat{
     registration_class: string,
     birth_date: string,
 }
+
+export interface CatSummary {
+    id : string
+    name : string
+    registries: Registry[]
+    colors: Color[]
+    cattery: string,
+    country: string,
+    microchips: Microchip[],
+}

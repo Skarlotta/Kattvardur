@@ -3,7 +3,7 @@ import { connectAdminLogin } from '../../lib/components/authentication/LoginUtil
 import { Person,ApiShow, Show } from '../../lib/types';
 import { jsonFetch } from '../../fetcher';
 import { useEffect, useState } from 'react';
-import { PrettyTable } from '../../lib/components/blocks/ModelTable/ModelTable';
+import { PrettyTable } from '../../lib/components/blocks/Tables/ModelTable/ModelTable';
 import { ShowManager } from '../../lib/models/Show';
 
 const ShowOverview: NextPage = () => {

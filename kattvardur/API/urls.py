@@ -7,7 +7,7 @@ from API.auth_views import Login, Logout, OauthLogin, ValidateLogin
 from Catteries.views import CatteryViewSet
 from Membership.views import MemberViewSet
 from Organizations.views import OrganizationViewSet
-from Shows.views import ShowViewSet
+from Shows.views import ShowViewSet, EntryViewSet
 
 app_name = 'API'
 
@@ -21,6 +21,7 @@ router.register(r'ems/b', BreedViewSet, basename="breed")
 router.register(r'ems/c', ColorViewSet, basename="color")
 router.register(r'ems/e', EMSViewSet, basename="ems")
 router.register(r'show', ShowViewSet, basename="show")
+router.register(r'show/(?P<sid>\d+)/entry', EntryViewSet, basename="entry")
 
 urlpatterns = [
     path('auth/oauth/', OauthLogin),

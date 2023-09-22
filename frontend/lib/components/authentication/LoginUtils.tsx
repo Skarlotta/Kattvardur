@@ -8,8 +8,8 @@ interface AuthResponse {
 
 const processValidation = (data: AuthResponse, storage : any, router : NextRouter) => {
     if(data.is_authenticated){
-        storage.lastVerified = new Date(new Date().getTime() + 5 * 60000)
-        setStorageObject("user", storage, new Date(new Date().getTime() + 30 * 60000).getTime())
+        storage.lastVerified = new Date(new Date().getTime() + 12  * 60 * 60000)
+        setStorageObject("user", storage, new Date(new Date().getTime() + 12 * 60 * 60000).getTime())
     } else {
         removeStorage("user");
         router.push('/login');

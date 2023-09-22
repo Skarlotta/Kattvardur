@@ -1,4 +1,5 @@
 import { Person } from "./Member"
+import { CatSummary } from "./Cat"
 
 export interface ApiShow{
     id: string
@@ -20,4 +21,13 @@ export interface Show{
     openForRegistration: boolean,
     interntional: boolean,
     judges: Person[]
+}
+
+export interface Entry {
+    id: string,
+    cat_model : CatSummary,
+    show: string,
+    catalog_nr: string,
+    guest: boolean,
+    judgement: string
 }

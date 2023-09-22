@@ -70,11 +70,9 @@ class CatSerializer(serializers.ModelSerializer):
         fields = [
             'id', 
             'name',
-            'registration_class',
             'country',
             'birth_date',
             'isMale',
-            'neuter',
             'dam',
             'sire',
             'cattery', 
@@ -103,3 +101,24 @@ class CatSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
+    
+class CatSummarySerializer(serializers.ModelSerializer):    
+    microchips = MicrochipSerializer(many=True, source='microchip_set')
+    colors = CatColorSerializer(many=True, source='catcolor_set')
+    registries = RegistrySerializer(many=True, source='registry_set')
+
+    class Meta:
+        model = Cat        
+        dam = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+        sire = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+        cattery = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+        fields = [
+            'id', 
+            'name',
+            'cattery', 
+            'microchips',
+            'colors',
+            'registries'
+        ]
+
+    
