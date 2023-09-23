@@ -1,0 +1,13 @@
+.navbar{
+    padding-top:1em;
+}
+
+.navbar a{
+    padding-right:1em;
+}
+
+.navbar a.selected{
+    color: var(--primary);
+    text-decoration: underline;
+    font-weight: bold;
+}

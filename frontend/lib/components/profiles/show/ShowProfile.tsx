@@ -5,6 +5,7 @@ import profileStyle from '../styles.module.css'
 import { ComponentNavigator } from "../../componentNavigator";
 import { SortableTable } from "../../blocks/Tables/SortableTable/SortableTable";
 import { SortableElement } from "../../blocks/Tables/SortableTable/SortableElement";
+import { Showmanagement } from "../../showmanagement/Showmanagement";
 
 interface P {
     show : Show,
@@ -21,7 +22,7 @@ const createSortableElement= (key : string, element : any)  : SortableElement  =
         element
     }
 }
-const B = ({entries} : P) => {
+const EntrantList = ({entries} : P) => {
     return <SortableTable 
         column_keys={["catalog_nr","registry_nr","name","ems"]}
         headings={["Sýninganúmer", "Skráninganúmer", "Nafn", "EMS"]}
@@ -36,11 +37,9 @@ const B = ({entries} : P) => {
             }))}
         />
 }
-const C = ({show} : P) => {
-    return <h1>C</h1>
-}
+
 export const ShowProfile = ({show, entries} : P) => {
-    const pages = [A,B,C];
+    const pages = [A, EntrantList, Showmanagement];
     return <div className={profileStyle.profileWrapper}>
         <div className={profileStyle.title}>
             <h1>{show.name}</h1>
@@ -48,7 +47,7 @@ export const ShowProfile = ({show, entries} : P) => {
         </div>
         <div>
             <ComponentNavigator 
-                items={["Yfirlit", "Keppendur", "Sýningarritun "]}
+                items={["Yfirlit", "Keppendur", "Sýningarritun"]}
                 pages={pages}
                 props={{show, entries}}
             />
