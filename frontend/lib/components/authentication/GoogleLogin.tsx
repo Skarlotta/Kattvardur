@@ -43,7 +43,7 @@ class LoginForm extends Component<P, PS>{
         if(!u || !p){
             return this.setState({error : "Vinsamlegast útfyllið netfang og lykilorð"});
         }
-        fetch("/api/v1/auth/login", {
+        fetch("/api/v1/auth/login/", {
             method: "POST",
             body: JSON.stringify({
                 username : u,

@@ -12,7 +12,7 @@ const processValidation = (data: AuthResponse, storage : any, router : NextRoute
         setStorageObject("user", storage, new Date(new Date().getTime() + 12 * 60 * 60000).getTime())
     } else {
         removeStorage("user");
-        router.push('/login');
+        router.push('/login/');
         return null;
     }
 }
@@ -25,11 +25,11 @@ export const connectAdminLogin = (Component: NextPage<any>) => {
             console.log("user?", getStorageObject("user"))
             const storage = getStorageObject("user");
             if(!storage){
-                router.push('/login');
+                router.push('/login/');
                 return null;
             } else {
                 if(!storage.lastVerified || new Date(storage.lastVerified) < new Date()){
-                    const a = fetch("/api/v1/auth/validate").then(d => {
+                    const a = fetch("/api/v1/auth/validate/").then(d => {
                         d.json().then(d => processValidation(d, storage, router))
                     });
                 }

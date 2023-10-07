@@ -1,10 +1,10 @@
-import { Person,ApiShow, Show} from '../../lib/types';
+import { Person,ApiShow, Show, ShowOverview, Judge} from '../../lib/types';
 import { jsonFetch } from '../../fetcher';
 import { PersonManager } from './Person';
 
 export const ShowManager = {    
     get : async (id : string) : Promise<Show | undefined>=> {
-        const show : ApiShow = await jsonFetch("/api/v1/show/"+id);
+        const show : ApiShow = await jsonFetch("/api/v1/show/"+id+"/");
         if(show){
             return (await ShowManager.processApiShows([show]))[0];
         } else {
@@ -16,6 +16,20 @@ export const ShowManager = {
         return await ShowManager.processApiShows(shows);
     }),
 
+    overview : (async(id : string) => {
+        const overview : ShowOverview = await jsonFetch(`/api/v1/show/${id}/overview/`);
+        return overview;
+    }),
+
+    judges : async (id : string) : Promise<Judge[] | undefined>=> {
+        const judges : Judge[] = await jsonFetch("/api/v1/show/"+id+"/judges/");
+        console.log("judge", judges);
+        if(judges){
+            return judges;
+        } else {
+            return undefined;
+        }
+    },
     processApiShows: async (shows : ApiShow[]) : Promise<Show[]> => {
         const processedShows : Show[] = [];
         const personPromise: Promise<Person>[]= [];

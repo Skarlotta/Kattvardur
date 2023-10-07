@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true, 
-  trailingSlash: true,
+  trailingSlash: true,  
+  images: {
+    loader: 'akamai',
+    path: '',
+  },
   async rewrites() {
     return [
       {

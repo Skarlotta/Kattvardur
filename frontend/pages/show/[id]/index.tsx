@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { connectAdminLogin } from '../../../lib/components/authentication/LoginUtils';
-import { Person,ApiShow, Show, Entry } from '../../../lib/types';
+import { Person,ApiShow, Show, Entry, Judge } from '../../../lib/types';
 import { useEffect, useState } from 'react';
 import { ShowManager } from '../../../lib/models/Show';
 import { useRouter } from 'next/router'
@@ -12,9 +12,13 @@ const ShowPage: NextPage = () => {
     const id = router.query.id;
     const [show, setShow] = useState<Show>();
     const [entries, setEntries] = useState<Entry[]>([]);
+    const [judges, setJudges] = useState<Judge[]>([]);
     useEffect(() => {
         ShowManager.get(id as string).then((show) => {
             setShow(show);
+        });
+        ShowManager.judges(id as string).then((judges) => {
+            if(judges) setJudges(judges);
         });
         EntryManager.all(id as string).then((entries) => {
             if(entries){
@@ -22,7 +26,7 @@ const ShowPage: NextPage = () => {
             }
         });
     }, [id]);
-    return show ? <ShowProfile show={show} entries={entries}/> : <b>loading</b>;
+    return show ? <ShowProfile show={show} entries={entries} judges={judges}/> : <b>loading</b>;
 }
 
 

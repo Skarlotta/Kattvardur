@@ -19,6 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
     re_path(r'api/v1/', include('API.urls', namespace='v1')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

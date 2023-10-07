@@ -11,3 +11,7 @@
     text-decoration: underline;
     font-weight: bold;
 }
+
+.navbar a.unselectedLink{
+    color: #0aa678;
+}

@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { Entry, Show } from "../../types";
+import React, { useEffect, useState } from "react";
+import { Entry, Show, ShowOverview , Judge} from "../../types";
 import { ColorJudgement, EntryJudgement, Files, Finals, LitterJudgement, Overview } from "./subtools";
 import Style from './style.module.css';
+import { ShowManager } from "../../models/Show";
 
 interface P {
     show : Show,
     entries : Entry,
+    judges : Judge[],
 }
 
 interface pageP {
@@ -57,7 +59,7 @@ const Pagenavigator = ({selectedPage, setPage} : PagenavigatorProps) => {
     return <div className={Style.navbar}>
         {pages.map((page) =><a 
             key={page.key}
-            className={selectedPage == page ? Style.selected : ""}
+            className={selectedPage == page ? Style.selected : Style.unselectedLink}
             onClick={() => setPage(page)}>
                 {page.name}
         </a>
@@ -66,13 +68,13 @@ const Pagenavigator = ({selectedPage, setPage} : PagenavigatorProps) => {
 }
 
 
-export const Showmanagement = ({show, entries} : P) => {
+export const Showmanagement = ({show, entries, judges} : P) => {
     const [page, setPage] = useState(pages[0]);
-    const [overview, setOverview] = useState();
 
     const props = {
         show,
-        entries
+        entries,
+        judges,
     }
     return <div>
         <Pagenavigator

@@ -10,3 +10,17 @@
 .prettyTable tr:nth-child(2n){
     background-color: #EEE;
 }
+
+.boxtable{
+    display: flex;
+    background-color: lightblue;
+    border:1px solid #999;
+    min-height: 3em;
+    overflow: scroll;
+    flex-wrap: wrap;
+}
+.boxtable div{
+    width:auto;
+    font-weight: bold;
+    margin:0.25em;
+}

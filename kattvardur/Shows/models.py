@@ -26,6 +26,11 @@ class Entry(models.Model):
             self.judgement = j
         super().save()
 
+    def judged(self):
+        return self.abs() or self.judgement.judgement != ""
+
+    def abs(self):
+        return self.judgement.abs
     class Meta:
         indexes = [
             models.Index(fields=['cat']),
@@ -49,6 +54,7 @@ class Show(models.Model):
     judges = models.ManyToManyField(Person, related_name='judged', through = Judge)
     entries = models.ManyToManyField(Cat, through=Entry)
     awards = models.ManyToManyField(Award)
+
     def __str__(self):
         return self.name + ". " + str(self.date)
     class Meta:
@@ -56,7 +62,15 @@ class Show(models.Model):
             models.Index(fields=['name']),
             models.Index(fields=['date']),
         ]
-
+    def overview(self):
+        entries = Entry.objects.filter(show_id = self.id)
+        overview = {
+            "judged" : [entry.id for entry in entries if entry.judged() and not entry.abs()],
+            "abs" : [entry.id for entry in entries  if entry.abs()],
+            "unjudged" :[entry.id for entry in entries  if not entry.judged()],
+        }
+        return overview
+        
 class Judgement(models.Model):
     judge = models.ForeignKey(Judge, null=True, blank=True, on_delete=models.CASCADE)
     judgement = models.CharField(max_length = 10, default = "", blank=True) #EX1
@@ -72,6 +86,14 @@ class Judgement(models.Model):
         if hasattr(self, 'entry'):
             return "Entry " + str(self.entry) 
         return "NoneJudgement"
+    
+    @property
+    def getCert(self):
+        if(hasattr(self, "catcertification")):
+            return self.catcertification.certification
+        else : 
+            return self.entry.cat.getNextCert()
+    
 
     @property
     def entrant(self):        

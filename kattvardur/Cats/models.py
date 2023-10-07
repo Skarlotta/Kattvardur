@@ -3,9 +3,10 @@ from django.db.models.deletion import SET_NULL
 
 from Catteries.models import Cattery
 from Organizations.models import Organization
+from Awards.models import Certification
 from Breeds.models import EMS
 from django.utils.timezone import now
-
+from dateutil.relativedelta import relativedelta 
 
 class Cat(models.Model):
     id = models.AutoField(primary_key = True)
@@ -30,13 +31,22 @@ class Cat(models.Model):
         ]
 
     @property
-    def curr_ems(self):
+    def ems(self):
         colors = self.catcolor_set
         if(colors.count() > 0):
             return colors.latest('date').ems
         else:
             return None
-    
+        
+    @ems.setter
+    def ems(self, value):
+        ems = EMS.findByString(value)
+        color = Catcolor(
+            cat = self,
+            ems = ems
+        )
+        color.save()
+
     @property
     def curr_phenotype(self):
         colors = self.phenotypecolor_set
@@ -45,6 +55,36 @@ class Cat(models.Model):
         else:
             return None
 
+    @property
+    def isKitten(self):
+        return self.birth_date + relativedelta(months=7) > now().date()
+    @property
+    def isJunior(self):
+        return self.birth_date + relativedelta(months=10) > now().date()
+    @property
+    def isElder(self):
+        return self.birth_date + relativedelta(years=7) > now().date()
+
+    def getHighestCert(self, neuter=False):
+        myCerts = [cert for cert in self.catcertification_set.all() if (cert.certification.certclass % 2 == (0 if neuter else 1))]
+        bestCert = None
+        rank = -1
+        for cert in myCerts:
+            ar = cert.certification.absoluteRank
+            if ar > rank:
+                bestCert = cert 
+                rank = ar
+        return bestCert
+
+    def getNextCert(self):
+        if(self.isKitten or self.isJunior):
+            return None
+        highest = self.getHighestCert(self.isNeutered)
+        if(highest):
+            return highest.certification.next
+        else:
+            return Certification.objects.get(ranking = 1, certclass = 10 if self.isNeutered else 9)
+        
     class Meta:
         indexes = [
             models.Index(fields=['id']),
@@ -62,9 +102,17 @@ class Cat(models.Model):
             return "[N/A]"
     @property
     def colorString(self):
-        _ems = self.curr_ems
+        _ems = self.ems
         _pheno = self.curr_phenotype
         return (str(_ems) if _ems else "[N/A]") + ((" [" + str(_pheno) +"]") if _pheno else "")
+
+    @staticmethod
+    def getByRegnr(value):
+        reg = Registry.objects.filter(registry_number__icontains = value)
+        if(len(reg) > 0):
+            return reg[0].cat
+        else:
+            return None
 
     def __str__(self):
         if self.cattery:

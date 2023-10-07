@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Entry, Show } from "../../../types";
+import { Entry, Judge, Show } from "../../../types";
 import showStyle from './styles.module.css'
 import profileStyle from '../styles.module.css'
 import { ComponentNavigator } from "../../componentNavigator";
@@ -9,7 +9,8 @@ import { Showmanagement } from "../../showmanagement/Showmanagement";
 
 interface P {
     show : Show,
-    entries: Entry[]
+    entries: Entry[],
+    judges : Judge[]
 }
 
 const A = ({show} : P) => {
@@ -38,7 +39,7 @@ const EntrantList = ({entries} : P) => {
         />
 }
 
-export const ShowProfile = ({show, entries} : P) => {
+export const ShowProfile = ({show, entries, judges} : P) => {
     const pages = [A, EntrantList, Showmanagement];
     return <div className={profileStyle.profileWrapper}>
         <div className={profileStyle.title}>
@@ -49,7 +50,7 @@ export const ShowProfile = ({show, entries} : P) => {
             <ComponentNavigator 
                 items={["Yfirlit", "Keppendur", "Sýningarritun"]}
                 pages={pages}
-                props={{show, entries}}
+                props={{show, entries, judges}}
             />
         </div>
     </div>

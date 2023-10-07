@@ -23,11 +23,39 @@ export interface Show{
     judges: Person[]
 }
 
+export interface ShowOverview{
+    show_id : string,
+    judged : string[],
+    unjudged : string[],
+    abs : string[],
+}
+
 export interface Entry {
     id: string,
     cat_model : CatSummary,
     show: string,
     catalog_nr: string,
     guest: boolean,
-    judgement: string
+    judgement: string,
+    judge: string,
+    judge_name: string,
+}
+
+export interface Judgement {
+    id: number,
+    judge_id: number,
+    judgement: string,
+    biv: boolean,
+    abs: boolean,
+    comment:string,
+    nominations: number[],
+    ems: string
+}
+
+export interface Judge {
+    id: number,
+    show_id: number,
+    person_id: string,
+    name: string,
+    country: string,
 }

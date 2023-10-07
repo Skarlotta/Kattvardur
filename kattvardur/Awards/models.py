@@ -24,5 +24,15 @@ class Certification(models.Model):
 	title = models.OneToOneField(Title, null = True,blank=True, on_delete=models.SET_NULL)
 	certclass = models.IntegerField()
 
+	@property
+	def absoluteRank(self):
+		if(self.name == "HP"):
+			return 100 * 15
+		return 100 * (12 - self.certclass) + self.ranking
+
+	@property
+	def previous(self):
+		return Certification.objects.get(Q(next = self) & ~Q(ranking = self.ranking)) if Certification.objects.filter(Q(next = self) & ~Q(ranking = self.ranking)).exists() else None
+	
 	def __str__(self):
 		return self.name  +" "+ str(self.ranking) + " " + ("("+str(self.title)+")" if self.title else "") + ((" Previous : " + Certification.objects.get(Q(next = self) & ~Q(name = self.name)).name) if Certification.objects.filter(Q(next = self) & ~Q(name = self.name)).exists() else "")
