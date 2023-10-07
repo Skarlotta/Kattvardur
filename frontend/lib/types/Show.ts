@@ -1,5 +1,6 @@
 import { Person } from "./Member"
 import { CatSummary } from "./Cat"
+import { Cert } from "./Cert"
 
 export interface ApiShow{
     id: string
@@ -49,7 +50,9 @@ export interface Judgement {
     abs: boolean,
     comment:string,
     nominations: number[],
-    ems: string
+    ems: string,
+    cert_won: boolean,
+    cert : Cert
 }
 
 export interface Judge {

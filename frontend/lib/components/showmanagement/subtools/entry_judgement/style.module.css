@@ -1,0 +1,46 @@
+.entry_form{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.entry_form div{
+    display: flex;
+    max-width: 25%;
+    min-width: 25%;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    height: 3em;
+    flex-wrap: wrap;
+}
+
+.entry_form label{
+    width: 100%;
+    text-align: center;
+}
+.entry_form input{
+    width: 100%;
+    text-align: center;
+}
+.entry_form select{
+    width: 100%;
+    text-align: center;
+}
+.entry_form input{
+    width: 100%;
+}
+
+.entry_form input:read-only {
+    background-color: #CCCC;
+}
+
+.entry_form button {
+    background-color: var(--primary);
+    width:15em;
+    margin-top:2em;
+}
+.entry_select{
+    margin-bottom:1em;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top:1em;
+}

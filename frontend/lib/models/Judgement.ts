@@ -24,12 +24,11 @@ export const JudgementManager = {
         return {
             abs: data.abs,
             biv: data.biv,
-            //catcertification: data.catcertification,
             comment: data.comment,
-            //judge_id: data.judge_id,
             nominations: data.nominations,
             judgement: data.judgement,
-            judge_id : data.judge_id
+            judge_id : data.judge_id,
+            cert_won : data.cert_won
         }
     }
 }

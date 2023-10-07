@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from Shows.models import Show, Entry, Judgement, Judge
+from Shows.models import Show, Entry, Judgement, Judge, CatCertification
+from Awards.serializers import CertificationSerializer
 from Cats.serializer import CatSummarySerializer
 
 class ShowSerializer(serializers.ModelSerializer):
@@ -24,18 +25,30 @@ class ShortEntrySerializer(serializers.ModelSerializer):
 class JudgementSerializer(serializers.ModelSerializer):
     ems = serializers.SerializerMethodField()
     cert = serializers.SerializerMethodField()
+    cert_won = serializers.SerializerMethodField()
 
     def get_ems(self, obj):
         if(hasattr(obj,"entry")):
             return str(obj.entry.cat.ems)
         return ""
-    
+
+    def get_cert_won(self, obj):
+        if(hasattr(obj,"catcertification")):
+            return True
+        return False
+ 
     def get_cert(self, obj):
-        return obj.catcertification if hasattr(obj, "catcertification") else None
+
+        if(hasattr(obj, "catcertification")):
+             return CertificationSerializer(obj.catcertification.certification).data
+        else:
+            if(not hasattr(obj, "entry")):
+                return ""
+            return CertificationSerializer(obj.entry.cat.getNextCert()).data
     
     class Meta:
         model = Judgement
-        fields = ['id', 'judge_id', 'judgement', 'biv', 'abs', 'comment', 'nominations', 'ems', 'cert']
+        fields = ['id', 'judge_id', 'judgement', 'biv', 'abs', 'comment', 'nominations', 'ems', 'cert', 'cert_won']
 
     def update(self, instance, validated_data):
         judge = validated_data.get('judge_id', instance.judge_id)
@@ -46,6 +59,7 @@ class JudgementSerializer(serializers.ModelSerializer):
         instance.biv = validated_data.get('biv', instance.biv)        
         instance.abs = validated_data.get('abs', instance.abs)
         instance.comment = validated_data.get('comment', instance.comment)
+        instance.won_cert = validated_data.get('cert_won', instance.won_cert)
         instance.save()
         return instance
     

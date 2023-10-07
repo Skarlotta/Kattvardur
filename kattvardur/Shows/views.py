@@ -75,7 +75,9 @@ class JudgementViewSet(viewsets.ModelViewSet):
         sid = kwargs['sid']
         judgement = Judgement.objects.get(entry__show_id = sid, entry__catalog_nr = catalog_nr)
         dat = request.body.decode('utf8').replace("'", '"')
-        serialize = JudgementSerializer(json.loads(dat), partial=True)
-        print(json.loads(dat))
-        serialize.update(judgement, serialize.data)
+        d = json.loads(dat)
+        serialize = JudgementSerializer(d, partial=True)
+        validated = serialize.data
+        validated["cert_won"] = d["cert_won"]
+        serialize.update(judgement, validated)
         return Response(serialize.data)

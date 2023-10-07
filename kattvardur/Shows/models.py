@@ -4,6 +4,7 @@ from Cats.models import Cat
 from People.models import Person
 from Awards.models import Award, Certification
 from Breeds.models import EMS
+from django.utils.timezone import now
 
 class Entry(models.Model):
     id = models.AutoField(primary_key=True)
@@ -88,8 +89,27 @@ class Judgement(models.Model):
         return "NoneJudgement"
     
     @property
+    def won_cert(self):
+        return hasattr(self, "catcertification")    
+        
+    @won_cert.setter
+    def won_cert(self, value):
+        if(value == self.won_cert):
+            return #do nothing
+        if(value == True):
+            cert = CatCertification()
+            cert.judgement = self
+            cert.cat = self.entry.cat
+            cert.date = self.entry.show.date
+            cert.ems = self.entry.cat.ems
+            cert.certification = self.entry.cat.getNextCert()
+            cert.save()
+        else:
+            cert = self.catcertification.delete()
+    
+    @property
     def getCert(self):
-        if(hasattr(self, "catcertification")):
+        if(self.won_cert):
             return self.catcertification.certification
         else : 
             return self.entry.cat.getNextCert()
