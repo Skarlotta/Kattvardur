@@ -4,29 +4,7 @@ import Link from 'next/link';
 import Dropdown from './Dropdown'
 
 function NavBar(){
-    return (<div className={styles.navbar}>     
-    <Dropdown toggle="Tets">
-    <Link href="/cat/">
-        <a>
-            Kettir
-        </a>
-    </Link>  
-    </Dropdown>      
-        <Link href="/cattery/">
-            <a className ={styles.navbar_link}>
-                Ræktanir
-            </a>
-        </Link>
-        <Link href="/member/">
-            <a className ={styles.navbar_link}>
-                Félagar
-            </a>
-        </Link>
-        <Link href="/show/">
-            <a className ={styles.navbar_link}>
-                Sýningar
-            </a>
-        </Link>
+    return (<div className={styles.navbar}>        
     </div>);
 } 
 

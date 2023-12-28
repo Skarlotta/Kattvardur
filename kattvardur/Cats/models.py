@@ -41,6 +41,9 @@ class Cat(models.Model):
     @ems.setter
     def ems(self, value):
         ems = EMS.findByString(value)
+        if(ems == None):
+            print("ems does not exist : " + value)
+            return
         color = Catcolor(
             cat = self,
             ems = ems

@@ -28,7 +28,8 @@ class Certification(models.Model):
 	def absoluteRank(self):
 		if(self.name == "HP"):
 			return 100 * 15
-		return 100 * (12 - self.certclass) + self.ranking
+		p = self.previous
+		return 100 * (12 - (p.certclass if p else 12) ) + self.ranking
 
 	@property
 	def previous(self):

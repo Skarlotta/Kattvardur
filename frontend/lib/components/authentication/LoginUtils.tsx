@@ -17,22 +17,28 @@ const processValidation = (data: AuthResponse, storage : any, router : NextRoute
     }
 }
 
+export const isLoggedIn = () => {
+    if (typeof window !== 'undefined'){
+        const storage = getStorageObject("user");
+        return !!storage;
+    }
+    return true;
+}
+
 export const connectAdminLogin = (Component: NextPage<any>) => {
     const ConnectedAdminComponent = () => {
         const router = useRouter();
-        console.log("aaaa");
         if (typeof window !== 'undefined'){
-            console.log("user?", getStorageObject("user"))
-            const storage = getStorageObject("user");
-            if(!storage){
-                router.push('/login/');
-                return null;
-            } else {
+            if(isLoggedIn()){
+                const storage = getStorageObject("user");
                 if(!storage.lastVerified || new Date(storage.lastVerified) < new Date()){
                     const a = fetch("/api/v1/auth/validate/").then(d => {
                         d.json().then(d => processValidation(d, storage, router))
                     });
                 }
+            } else {
+                router.push('/login/');
+                return null;
             }
         }
         return <Component/>
@@ -40,3 +46,4 @@ export const connectAdminLogin = (Component: NextPage<any>) => {
 
     return ConnectedAdminComponent;
 }
+

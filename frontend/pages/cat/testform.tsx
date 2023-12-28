@@ -8,7 +8,9 @@ import { Cat, Person } from '../../lib/types';
 
 export const CatTestFormPage: NextPage = () => {
 
-    return <SinglePageForm
+    return <div>
+        <h2>Skrá húskött</h2>
+        <SinglePageForm
         onSubmit={handleSubmit}
         fields={
             {
@@ -16,6 +18,7 @@ export const CatTestFormPage: NextPage = () => {
             }
         }
     />
+        </div>
 };
 
 const handleSubmit = async (data : any, resolve: any) => {
